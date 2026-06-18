@@ -1,0 +1,117 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.table th {
+  background: var(--th-bg);
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  border-bottom: 2px solid var(--accent);
+  white-space: nowrap;
+}
+
+.thRank { width: 48px; }
+.thName { text-align: center; }
+.thTeam { text-align: center; }
+.thScore { width: 70px; }
+
+.row {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.row:nth-child(even) { background: var(--row-even); }
+.row:hover { background: var(--row-hover); }
+
+.row.selected {
+  background: var(--row-selected);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.row.flash { animation: flashBg 0.8s ease-out; }
+
+@keyframes flashBg {
+  0% { background: var(--gold-light); }
+  100% { background: transparent; }
+}
+
+.row:nth-child(even).flash { animation-name: flashBgEven; }
+
+@keyframes flashBgEven {
+  0% { background: var(--gold-light); }
+  100% { background: var(--row-even); }
+}
+
+.rank { text-align: center; padding: 8px 10px; }
+
+.rankNum {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.medal1, .medal2, .medal3 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.medal1 { background: #f5a623; }
+.medal2 { background: #a0a0a0; }
+.medal3 { background: #c08a50; }
+
+.name {
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team {
+  padding: 8px 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,120 @@
+/* ====== Light (default) ====== */
+:root, [data-theme="light"] {
+  --bg-primary: #f0f2f5;
+  --bg-white: #ffffff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --accent: #1a73e8;
+  --accent-light: #e8f0fe;
+  --gold: #e6a817;
+  --gold-light: #fef7e0;
+  --success: #34a853;
+  --danger: #ea4335;
+  --border: #e8e8e8;
+  --border-light: #f0f0f0;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --row-even: #fafbfc;
+  --row-hover: #e8f0fe;
+  --row-selected: #e8f0fe;
+  --th-bg: #fafafa;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Dark ====== */
+[data-theme="dark"] {
+  --bg-primary: #0d1117;
+  --bg-white: #161b22;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #58a6ff;
+  --accent-light: #1c2b3e;
+  --gold: #d2991d;
+  --gold-light: #2a2412;
+  --success: #3fb950;
+  --danger: #f85149;
+  --border: #30363d;
+  --border-light: #21262d;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --row-even: #1a1f2a;
+  --row-hover: #1c2b3e;
+  --row-selected: #1c3050;
+  --th-bg: #1a1f2a;
+  --overlay: rgba(0, 0, 0, 0.55);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Emerald ====== */
+[data-theme="emerald"] {
+  --bg-primary: #f0f5f2;
+  --bg-white: #ffffff;
+  --text-primary: #1a2e1e;
+  --text-secondary: #5a6c5e;
+  --text-muted: #8a9a8c;
+  --accent: #0d8c4a;
+  --accent-light: #e6f5ec;
+  --gold: #b8860b;
+  --gold-light: #fff8e8;
+  --success: #0d8c4a;
+  --danger: #d93025;
+  --border: #d8e8da;
+  --border-light: #e8f0e8;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --row-even: #f7faf8;
+  --row-hover: #e6f5ec;
+  --row-selected: #e6f5ec;
+  --th-bg: #f7faf8;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Violet ====== */
+[data-theme="violet"] {
+  --bg-primary: #f5f2f8;
+  --bg-white: #ffffff;
+  --text-primary: #241a2e;
+  --text-secondary: #665a70;
+  --text-muted: #948aa0;
+  --accent: #6b3fa0;
+  --accent-light: #f2ecf8;
+  --gold: #b8590a;
+  --gold-light: #fff0e0;
+  --success: #2d7d46;
+  --danger: #c5223e;
+  --border: #e0d8ea;
+  --border-light: #efe8f4;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --row-even: #f9f6fb;
+  --row-hover: #f2ecf8;
+  --row-selected: #f2ecf8;
+  --th-bg: #f9f6fb;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Base ====== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}

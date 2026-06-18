@@ -1,0 +1,873 @@
+/* ================================================================
+   GPLT 官方页面样式 — 1:1 精确复制 https://gplt.patest.cn/rank/team
+   CSS 变量通过 inline style 注入 (完全仿照原站)
+   ================================================================ */
+
+/* ---- GPLT-Number 字体 ---- */
+@font-face {
+  font-family: GPLT-Number;
+  src: url("/gplt/gplt-number.woff");
+}
+
+/* ---- 全局基础 ---- */
+body {
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(213, 11%, 20%);
+  line-height: 1.15;
+}
+a { color: hsl(175, 100%, 62%); text-decoration: none; transition: color 0.2s; }
+a:hover { color: hsl(175, 100%, 65%); text-shadow: 0 0 2px hsl(175, 100%, 62%); }
+h1 { font-size: 32px; margin: 0.67em 0; }
+h2 { font-size: 24px; }
+p { font-size: 16px; line-height: 24px; margin: 1em 0; }
+img { vertical-align: unset; }
+
+/* ---- 最外层容器 ---- */
+.mainContainer_zpZoi {
+  min-width: 1200px;
+}
+
+/* ---- GPLT Number ---- */
+.gpltNumber_n12aB,
+.gpltNumber_x1pEx { font-family: GPLT-Number, sans-serif; }
+
+
+/* ================================================================
+   动画
+   ================================================================ */
+@keyframes breath_hgNVP {
+  0%   { filter: drop-shadow(0 0 1px hsl(213, 80%, 50%)); }
+  100% { filter: drop-shadow(0 0 20px hsl(213, 80%, 50%)); }
+}
+@keyframes breathable_wwtrm {
+  0%   { filter: drop-shadow(0 0 1px hsl(213, 80%, 50%)); }
+  100% { filter: drop-shadow(0 0 20px hsl(213, 80%, 50%)); }
+}
+@keyframes shakeY_s8SzD {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1px); }
+  75% { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+/* ================================================================
+   container_KGMv8 (Hero 容器 - 与 wrapper_VkSjg 是兄弟元素)
+   ================================================================ */
+.container_KGMv8 {
+  position: relative;
+}
+
+/* wrapper_Gjsvi (Hero overflow 控制) */
+.wrapper_Gjsvi {
+  overflow: hidden;
+}
+
+/* shortBody_ELmXF (Hero 主体) */
+.shortBody_ELmXF {
+  position: relative;
+  background: var(--bg-image) no-repeat;
+  background-size: 100% 531px;
+  height: 531px;
+}
+.shortBody_ELmXF .rocket_vlZSI {
+  top: auto;
+  bottom: 0;
+}
+.shortBody_ELmXF .top_gG9x9 {
+  max-height: 500px;
+}
+
+/* Hero 内绝对定位元素 */
+.top_gG9x9 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.left_e69CK {
+  animation: breathable_wwtrm ease-in-out 2000ms infinite alternate;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+}
+.right_RTLWm {
+  animation: breathable_wwtrm ease-in-out 2000ms infinite alternate;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.rocket_vlZSI {
+  position: absolute;
+  top: 351px;
+  right: 26%;
+}
+
+/* inner_cEOqe (占位 div) */
+.inner_cEOqe {
+  position: relative;
+}
+
+/* ladder (在 shortBody 内) */
+.container_KGMv8 .ladder_LjuTV {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-left: -500px;
+}
+
+/* 导航链接 (在 shortBody 内) */
+.container_KGMv8 .links_xU9fI {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  width: 800px;
+  margin-left: -400px;
+}
+.container_KGMv8 .links_xU9fI a {
+  display: inline-block;
+  font-size: 25px;
+  width: 50%;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.container_KGMv8 .links_xU9fI a:hover {
+  color: hsl(175, 100%, 62%);
+}
+.container_KGMv8 .links_xU9fI a.active_Eu6E1 {
+  color: hsl(175, 100%, 62%);
+  text-shadow: 0 0 10px hsl(175, 100%, 62%);
+}
+
+/* Logo (在 shortBody 内) */
+.logo_Srcaz {
+  padding-top: 95px;
+  text-align: center;
+}
+.logo_Srcaz img {
+  animation: breath_hgNVP ease-in-out 2s infinite alternate;
+  margin: 0 auto;
+}
+
+/* ================================================================
+   wrapper_VkSjg (主内容 - 与 container_KGMv8 兄弟)
+   ================================================================ */
+.wrapper_VkSjg {
+  position: relative;
+  background-image:
+    var(--planet1-image), var(--planet2-image),
+    var(--planet3-image), var(--stardust-image), var(--bg-image);
+  background-position:
+    -256px 600px, right 0 top 800px,
+    right 100px top 2200px, center 1500px, top center;
+  background-size:
+    auto,
+    auto,
+    auto,
+    1200px auto,
+    100% auto;
+  background-repeat: no-repeat;
+}
+.wrapper_VkSjg .body_W_vNZ {
+  position: relative;
+  width: 100%;
+  padding: 1px 8px;
+}
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 300px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  outline: 1px solid hsla(175, 100%, 62%, 0.6);
+  border-radius: 5px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  background-color: hsla(213, 11%, 20%, 0.1);
+  box-shadow: 0 0 5px hsla(175, 100%, 62%, 0.6);
+  z-index: 10;
+  box-sizing: border-box;
+}
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 h1,
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 h2 {
+  color: hsl(175, 100%, 62%);
+}
+
+/* 火箭 + 云 (wrapper 内底部装饰) */
+.wrapper_VkSjg img.rocket_S4f1K {
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover {
+  animation: shakeY_s8SzD infinite 0.16s;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover + img.cloudLeft_yLzW1 {
+  bottom: 0;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover + img.cloudLeft_yLzW1 + img.cloudRight_a90At {
+  bottom: 0;
+}
+.wrapper_VkSjg img.cloudLeft_yLzW1,
+.wrapper_VkSjg img.cloudRight_a90At {
+  position: absolute;
+  bottom: -168px;
+  transition: bottom 1s;
+  pointer-events: none;
+}
+.wrapper_VkSjg img.cloudLeft_yLzW1 {
+  right: 0;
+}
+.wrapper_VkSjg img.cloudRight_a90At {
+  max-width: 100%;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+/* ================================================================
+   rankTeamPage_KSGze (队伍排名页)
+   ================================================================ */
+.rankTeamPage_KSGze .title_bd_Vy,
+.rankTeamPage_KSGze .title_Pdg00 {
+  margin: 25px 0 35px;
+}
+.rankTeamPage_KSGze .title_bd_Vy p.counter_vxdBF,
+.rankTeamPage_KSGze .title_Pdg00 p.counter_YbA0b {
+  margin: 0;
+  font-size: 18px;
+  color: hsl(0, 0%, 60%);
+}
+.rankTeamPage_KSGze .teamList_sy21T {
+  margin-top: 30px;
+}
+
+/* ---- 列表项 ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr {
+  transition: background 0.3s;
+  padding: 28px 5px 12px;
+  cursor: pointer;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr:nth-of-type(odd) {
+  background-color: hsla(0, 0%, 0%, 0.2);
+}
+
+/* ---- badge 10% ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz {
+  display: inline-block;
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz img {
+  height: 40px;
+  width: 34px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz p {
+  margin: 0;
+  display: inline-block;
+  font-size: 36px;
+  font-family: GPLT-Number, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  color: gold;
+  border: none;
+  padding: 0;
+}
+
+/* ---- pipes 80% ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa {
+  width: 80%;
+  display: inline-block;
+  white-space: nowrap;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa > div {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* head */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr {
+  background-image: var(--progress-head);
+  height: 50px;
+  width: 45px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr .logo_WqHLc {
+  height: 40px;
+  width: 40px;
+  margin: 6px 5px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr .logo_WqHLc img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+/* pipe body */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ {
+  background-image: var(--progress-pipe);
+  height: 28px;
+  width: 240px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .name_UpmfW {
+  position: absolute;
+  z-index: 15;
+  top: -28px;
+  font-size: 16px;
+  color: hsl(0, 0%, 85%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .badges_S9eE3 {
+  position: absolute;
+  z-index: 9;
+  top: -27px;
+  left: 80%;
+  margin-left: -15px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .badges2_uxJ8K {
+  position: absolute;
+  z-index: 9;
+  top: -27px;
+  left: 40%;
+  margin-left: -15px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .progressText_k18NH {
+  position: absolute;
+  left: 40%;
+  z-index: 100;
+  margin-top: 30px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .progressText_k18NH > span:first-child {
+  margin-left: -50%;
+}
+
+/* pipe 内 img */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img {
+  display: inline;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.progress_JU3mj {
+  position: relative;
+  z-index: 1;
+  top: 4px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.circle_dkyqW {
+  position: absolute;
+  z-index: 10;
+  margin: -13px -24px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.circle3_hbpfT {
+  position: absolute;
+  z-index: 10;
+  margin: -13px -3.5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 颜色 (团队 pipe) */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .blue_tbl_z { color: #7accec; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .yellow_LSYq3 { color: #f7ce27; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .red_uNAog { color: #f04f4f; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .grey_SZLno { color: #c5c5c5; }
+
+/* 节点 */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node_D8RD8 {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node1);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node1_q5IIb {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node2);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node2_X2JzO {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node3);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 特殊节点 (CSS 中有定义但实际 GPLT 页面不用) */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .snode0_ySJKe {
+  position: relative;
+  left: -10px;
+  z-index: -1;
+  background-image: var(--progress-snode1);
+  height: 46px;
+  width: 46px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .snode1_rLhVx {
+  position: relative;
+  left: -10px;
+  z-index: -1;
+  background-image: var(--progress-snode2);
+  height: 46px;
+  width: 46px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* tail */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .tail_c7ta0 {
+  background-image: var(--progress-tail);
+  width: 45px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* score 10% */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .score_lqSzX {
+  width: 10%;
+  text-align: center;
+  display: inline-block;
+  color: gold;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .score_lqSzX p {
+  font-size: 36px;
+  font-family: GPLT-Number, sans-serif;
+  margin: 0;
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* 空 */
+.empty_mnFop { margin: 50px auto; text-align: center; }
+.empty_mnFop p { font-size: 30px; color: hsl(0, 0%, 40%); }
+
+/* ================================================================
+   rankStudentPage_YXwTc (个人排名页)
+   ================================================================ */
+.rankStudentPage_YXwTc .title_Pdg00 { margin: 25px 0 35px; }
+.rankStudentPage_YXwTc .title_Pdg00 p.counter_YbA0b { margin: 0; font-size: 18px; color: hsl(0, 0%, 60%); }
+.rankStudentPage_YXwTc .studentList_JpA1T { margin-top: 30px; }
+
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 {
+  transition: background 0.3s;
+  padding: 28px 5px 12px;
+  cursor: pointer;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2:hover { background-color: rgba(0, 0, 0, 0.1); }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2:nth-of-type(odd) { background-color: hsla(0, 0%, 0%, 0.2); }
+
+/* badge */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC {
+  display: inline-block; width: 10%; text-align: center; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC img {
+  height: 40px;
+  width: 34px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC p {
+  margin: 0;
+  display: inline-block;
+  font-size: 36px;
+  font-family: GPLT-Number, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  color: gold;
+  border: none;
+  padding: 0;
+}
+
+/* pipes */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ {
+  width: 80%; display: inline-block; white-space: nowrap;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ > div {
+  position: relative; display: inline-block; vertical-align: middle;
+}
+
+/* head */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb {
+  background-image: var(--progress-head); height: 50px; width: 45px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb .logo_bPOkW {
+  height: 40px; width: 40px; margin: 6px 5px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb .logo_bPOkW img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+/* pipe body */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 {
+  background-image: var(--progress-pipe); height: 28px; width: 240px;
+  background-size: 100% 100%; background-repeat: no-repeat; position: relative;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .name_ETm8P {
+  position: absolute; z-index: 15; top: -28px; font-size: 16px;
+  color: hsl(0, 0%, 85%); pointer-events: none; white-space: nowrap;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .badges_pxPyz {
+  position: absolute; z-index: 9; top: -27px; left: 80%; margin-left: -15px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .badges2_bcVll {
+  position: absolute; z-index: 9; top: -27px; left: 40%; margin-left: -15px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .progressText_gcOoj {
+  position: absolute; left: 40%; z-index: 100; margin-top: 30px;
+  font-size: 12px; white-space: nowrap; pointer-events: none;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .progressText_gcOoj > span:first-child {
+  margin-left: -50%;
+}
+
+/* pipe 内 img */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.progress_zTSqP {
+  position: relative; z-index: 1; top: 4px; height: 20px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circle_FXZIg {
+  position: absolute; z-index: 10; margin: -13px -24px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circleFull_Kp4vJ {
+  position: absolute; z-index: 10; margin: -12px -6px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circle3_HPA2K {
+  position: absolute; z-index: 10; margin: -13px -3.5px;
+  display: inline-block; vertical-align: middle;
+}
+
+/* 颜色 (个人 pipe) */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .blue_wC5RT { color: #7accec; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .yellow_YpF2t { color: #f7ce27; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .red_FMh64 { color: #f04f4f; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .grey_gIZ_V { color: #c5c5c5; }
+
+/* 节点 */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node_JIp6m {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node1); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node1_P5XVN {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node2); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node2_zRkMT {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node3); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .snode0_mwV9m {
+  position: relative; left: -10px; z-index: -1;
+  background-image: var(--progress-snode1); height: 46px; width: 46px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .snode1_tKJte {
+  position: relative; left: -10px; z-index: -1;
+  background-image: var(--progress-snode2); height: 46px; width: 46px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+
+/* tail */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .tail_YUPwI {
+  background-image: var(--progress-tail); width: 45px; height: 50px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+
+/* score */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .score_ulq1B {
+  width: 10%; text-align: center; display: inline-block; color: gold;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .score_ulq1B p {
+  font-size: 36px; font-family: GPLT-Number, sans-serif; margin: 0; line-height: 1; font-weight: 700;
+}
+
+/* 空 */
+.empty_rGDZ6 { margin: 50px auto; text-align: center; }
+.empty_rGDZ6 p { font-size: 30px; color: hsl(0, 0%, 40%); }
+
+/* ================================================================
+   全局颜色工具类
+   ================================================================ */
+.blue_tbl_z, .blue_wC5RT, .blue_Cx7bg, .blue_buD1s { color: #7accec; }
+.yellow_LSYq3, .yellow_YpF2t, .yellow_czFWC, .yellow_o9Dr_ { color: #f7ce27; }
+.red_uNAog, .red_FMh64, .red_m4hpo, .red_E1yqp { color: #f04f4f; }
+.grey_SZLno, .grey_gIZ_V { color: #c5c5c5; }
+.gold_y6gQf, .gold_HAo16 { color: #edb700; }
+.purple_zrXMm, .purple_dk971 { color: #ff9ff6; }
+.white_nu68c, .white_E0zuK { color: white; }
+
+/* ================================================================
+   详情对话框
+   ================================================================ */
+.container_wH2cf, .container_WX_L3 { padding: 0 1.25rem; margin: 1.25rem 0; }
+.container_wH2cf .name_NeT8p, .container_WX_L3 .name_AuJI0 { font-style: italic; text-align: center; margin: 20px 0; }
+.container_wH2cf .name_NeT8p .teamname_y9f9N,
+.container_WX_L3 .name_AuJI0 .studentName_Ijs8B { color: #fff200; font-size: 3.3rem; font-weight: 700; }
+.container_wH2cf .name_NeT8p .schoolname_fIu00,
+.container_WX_L3 .name_AuJI0 .teamName_rgf1B { color: white; font-size: 2.4rem; }
+.container_wH2cf .name_NeT8p .schoolname_fIu00:before,
+.container_WX_L3 .name_AuJI0 .teamName_rgf1B:before { content: " - "; }
+
+/* ================================================================
+   官方按钮 / 分页 / 搜索框辅助样式
+   ================================================================ */
+.pc-button {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 5px 12px;
+  line-height: 1.2;
+  background: transparent;
+}
+.pc-button-outline.pc-color-warning { color: #f0ad4e; }
+.float-right { float: right; }
+.mr-4 { margin-right: 1rem; }
+.pagination_olRL8 { color: hsl(0, 0%, 70%); }
+.pagination_olRL8 a { text-shadow: none; }
+
+/* 翻页内联在标题行右侧 */
+.pagination_inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  float: right;
+}
+.pagination_inline a {
+  text-shadow: none;
+}
+
+/* 标题行 flex 布局：左文字 + 右翻页 */
+.title_Pdg00 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.title_Pdg00 h1 {
+  margin-right: 20px;
+}
+.title_Pdg00 p.counter_YbA0b {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: 0.25rem; }
+.gap-4 { gap: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-center { text-align: center; }
+.text-light { color: hsl(0, 0%, 65%); }
+.pageItem_NmC03 {
+  display: flex;
+  min-width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  color: hsl(0, 0%, 70%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8125rem;
+}
+.pageItem_NmC03:hover,
+.pageItem_NmC03.active_OZSEy {
+  border-color: hsla(0, 0%, 100%, 0.25);
+  background-color: hsla(0, 0%, 100%, 0.08);
+  color: hsl(0, 0%, 95%);
+}
+.pageItem_NmC03.active_OZSEy {
+  background-color: hsl(213, 80%, 45%);
+  color: white;
+}
+.pageItem_NmC03.disabled { pointer-events: none; opacity: 0.55; }
+.searchInput_sxNlz {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding-right: 8px;
+}
+.searchInput_sxNlz input {
+  width: 180px;
+  height: 28px;
+  padding: 6px 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: hsl(0, 0%, 95%);
+  font-size: 14px;
+}
+.searchInput_sxNlz input::placeholder { color: hsl(0, 0%, 60%); font-style: italic; }
+.searchInput_sxNlz button { color: hsl(0, 0%, 65%); }
+@media (min-width: 640px) {
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:items-center { align-items: center; }
+  .sm\:justify-between { justify-content: space-between; }
+  .sm\:justify-start { justify-content: flex-start; }
+  .sm\:text-left { text-align: left; }
+}
+
+/* ================================================================
+   选中/闪烁
+   ================================================================ */
+.teamListItem_qeRUr.gplt-selected,
+.studentListItem_LWYA2.gplt-selected {
+  background-color: hsla(175, 100%, 62%, 0.08) !important;
+  box-shadow: inset 3px 0 0 hsl(175, 100%, 62%);
+}
+.gplt-flash { animation: gplt-flashAnim 0.8s ease-out; }
+@keyframes gplt-flashAnim {
+  0% { background-color: hsla(175, 100%, 62%, 0.15); }
+  100% { background-color: transparent; }
+}
+.teamListItem_qeRUr:nth-of-type(odd).gplt-flash,
+.studentListItem_LWYA2:nth-of-type(odd).gplt-flash {
+  animation-name: gplt-flashAnimOdd;
+}
+@keyframes gplt-flashAnimOdd {
+  0% { background-color: hsla(175, 100%, 62%, 0.15); }
+  100% { background-color: hsla(0, 0%, 0%, 0.2); }
+}
+
+/* ================================================================
+   奖项徽章
+   ================================================================ */
+.gplt-awardBadge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; }
+.gplt-awardGold   { background: #edb700; color: #000; }
+.gplt-awardSilver { background: #869099; color: #fff; }
+.gplt-awardBronze { background: #d4621a; color: #fff; }
+
+/* ================================================================
+   header_ELHeQ
+   ================================================================ */
+.header_ELHeQ {
+  position: fixed; background: linear-gradient(#0a2f5c, transparent);
+  top: 0; left: 0; width: 100%; z-index: 20;
+}
+ul.menus_qa4xX {
+  list-style: none; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0;
+  white-space: nowrap; overflow-x: auto; display: flex; justify-content: space-between;
+}
+ul.menus_qa4xX li { display: inline-block; text-align: center; padding: 0 16px; }
+ul.menus_qa4xX li a { display: block; }
+ul.menus_qa4xX li a.active_BQebx,
+ul.menus_qa4xX li a:hover { background: radial-gradient(hsl(213, 80%, 60%), transparent 80%); text-decoration: none; }
+ul.menus_qa4xX li p { margin: 0; font-size: 18px; line-height: 64px; color: hsla(0, 0%, 100%, 0.8); }
+
+/* ================================================================
+   未解锁的进度条 — 灰色置灰
+   ================================================================ */
+.progressLocked_GRAY {
+  filter: grayscale(1) brightness(0.85) opacity(0.55);
+}
+
+/* ================================================================
+   footer_AWrq9 (页脚)
+   ================================================================ */
+.footer_AWrq9 {
+  position: relative;
+  background-color: hsl(213, 30%, 20%);
+  padding-top: 30px;
+  padding-bottom: 50px;
+  margin-top: 60px;
+  z-index: 11;
+}
+.footer_AWrq9 .container_zgmCz {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer_AWrq9 .container_zgmCz .supports_ZvyYN,
+.footer_AWrq9 .container_zgmCz .hosts__B8WB,
+.footer_AWrq9 .container_zgmCz .rights_HqAXh,
+.footer_AWrq9 .container_zgmCz .contacts_CWg7b {
+  display: inline-block;
+  width: 27%;
+  min-width: 250px;
+  padding: 0 15px;
+  vertical-align: top;
+  box-sizing: border-box;
+  white-space: initial;
+}
+.footer_AWrq9 .container_zgmCz .contacts_CWg7b { width: 15%; }
+.footer_AWrq9 .container_zgmCz h2 {
+  color: hsl(175, 100%, 62%);
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.footer_AWrq9 .container_zgmCz p {
+  color: hsla(0, 0%, 100%, 0.6);
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 8px 0;
+}
+.footer_AWrq9 .container_zgmCz a {
+  color: hsl(175, 100%, 62%);
+}
+.footer_AWrq9 .container_zgmCz a:hover {
+  color: hsl(175, 100%, 75%);
+  text-shadow: 0 0 2px hsl(175, 100%, 62%);
+}
+.footer_AWrq9 .container_zgmCz .footerSupportLine_NCWU {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer_AWrq9 .container_zgmCz .footerSupportLine_NCWU img {
+  height: 42px;
+  width: auto;
+}
+.footer_AWrq9 .container_zgmCz .footerSupportLine_NCWU span {
+  color: hsla(0, 0%, 100%, 0.85);
+  font-size: 16px;
+  font-weight: 500;
+}

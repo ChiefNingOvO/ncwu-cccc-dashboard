@@ -1,0 +1,88 @@
+/* ===== 官方版页面容器 — 允许自然滚动 (仿 GPLT) ===== */
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: hsl(213, 11%, 20%);
+  color: hsl(0, 0%, 75%);
+  font-family: ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+}
+
+/* ===== GPLT 风格固定 header ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 64px;
+  background: linear-gradient(#0a2f5c, transparent);
+  gap: 16px;
+}
+
+.backBtn {
+  padding: 4px 14px;
+  border: 1px solid hsla(175, 100%, 62%, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: hsl(175, 100%, 62%);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.backBtn:hover {
+  background: hsla(175, 100%, 62%, 0.1);
+  border-color: hsl(175, 100%, 62%);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: hsl(175, 100%, 62%);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.subtitle {
+  font-size: 12px;
+  color: hsl(0, 0%, 50%);
+}
+.clock {
+  font-size: 13px;
+  color: hsl(0, 0%, 60%);
+  font-variant-numeric: tabular-nums;
+}
+
+.simpleLink {
+  padding: 4px 12px;
+  border: 1px solid hsla(0, 0%, 100%, 0.15);
+  border-radius: 4px;
+  background: hsla(0, 0%, 100%, 0.05);
+  color: hsl(0, 0%, 55%);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.simpleLink:hover {
+  background: hsla(0, 0%, 100%, 0.12);
+  color: hsl(0, 0%, 80%);
+}

@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" style="overflow: visible;"><head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天梯赛实时大屏</title>
+  <style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/index.css">/* ====== Light (default) ====== */
+:root, [data-theme="light"] {
+  --bg-primary: #f0f2f5;
+  --bg-white: #ffffff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --accent: #1a73e8;
+  --accent-light: #e8f0fe;
+  --gold: #e6a817;
+  --gold-light: #fef7e0;
+  --success: #34a853;
+  --danger: #ea4335;
+  --border: #e8e8e8;
+  --border-light: #f0f0f0;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --row-even: #fafbfc;
+  --row-hover: #e8f0fe;
+  --row-selected: #e8f0fe;
+  --th-bg: #fafafa;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Dark ====== */
+[data-theme="dark"] {
+  --bg-primary: #0d1117;
+  --bg-white: #161b22;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #58a6ff;
+  --accent-light: #1c2b3e;
+  --gold: #d2991d;
+  --gold-light: #2a2412;
+  --success: #3fb950;
+  --danger: #f85149;
+  --border: #30363d;
+  --border-light: #21262d;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --row-even: #1a1f2a;
+  --row-hover: #1c2b3e;
+  --row-selected: #1c3050;
+  --th-bg: #1a1f2a;
+  --overlay: rgba(0, 0, 0, 0.55);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Emerald ====== */
+[data-theme="emerald"] {
+  --bg-primary: #f0f5f2;
+  --bg-white: #ffffff;
+  --text-primary: #1a2e1e;
+  --text-secondary: #5a6c5e;
+  --text-muted: #8a9a8c;
+  --accent: #0d8c4a;
+  --accent-light: #e6f5ec;
+  --gold: #b8860b;
+  --gold-light: #fff8e8;
+  --success: #0d8c4a;
+  --danger: #d93025;
+  --border: #d8e8da;
+  --border-light: #e8f0e8;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --row-even: #f7faf8;
+  --row-hover: #e6f5ec;
+  --row-selected: #e6f5ec;
+  --th-bg: #f7faf8;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Violet ====== */
+[data-theme="violet"] {
+  --bg-primary: #f5f2f8;
+  --bg-white: #ffffff;
+  --text-primary: #241a2e;
+  --text-secondary: #665a70;
+  --text-muted: #948aa0;
+  --accent: #6b3fa0;
+  --accent-light: #f2ecf8;
+  --gold: #b8590a;
+  --gold-light: #fff0e0;
+  --success: #2d7d46;
+  --danger: #c5223e;
+  --border: #e0d8ea;
+  --border-light: #efe8f4;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --row-even: #f9f6fb;
+  --row-hover: #f2ecf8;
+  --row-selected: #f2ecf8;
+  --th-bg: #f9f6fb;
+  --overlay: rgba(0, 0, 0, 0.3);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ====== Base ====== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/Header.module.css">._header_guuvr_1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 20px;
+  background: var(--bg-white);
+  border-bottom: 2px solid var(--accent);
+  flex-shrink: 0;
+}
+
+._left_guuvr_12 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+._backBtn_guuvr_18 {
+  padding: 4px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+._backBtn_guuvr_18:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+._title_guuvr_35 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+._right_guuvr_43 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+._viewModeBtn_guuvr_49 {
+  padding: 4px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+._viewModeBtn_guuvr_49:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+._viewModeActive_guuvr_67 {
+  background: var(--gold-light);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+._themeBtn_guuvr_73 {
+  padding: 4px 12px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+._themeBtn_guuvr_73:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+._date_guuvr_91 {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+._clock_guuvr_96 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/pages/DashboardPage.module.css">._page_yp6mi_1 {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+._container_yp6mi_6 {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+._header_yp6mi_12 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+._title_yp6mi_19 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+._subtitle_yp6mi_26 {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+._createBtn_yp6mi_32 {
+  padding: 12px 28px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+._createBtn_yp6mi_32:hover {
+  background: #1557b0;
+}
+
+._grid_yp6mi_49 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+._card_yp6mi_55 {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+._card_yp6mi_55:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+._cardTop_yp6mi_69 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+._badge_yp6mi_76 {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+._active_yp6mi_83 { background: #e6f4ea; color: #1e7e34; }
+._finished_yp6mi_84 { background: #f0f0f0; color: #888; }
+._upcoming_yp6mi_85 { background: var(--accent-light); color: var(--accent); }
+
+._date_yp6mi_87 {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+._startTime_yp6mi_92 {
+  font-size: 13px;
+  color: var(--accent);
+  margin: -10px 0 14px;
+  font-weight: 600;
+}
+
+._duration_yp6mi_99 {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+._cardName_yp6mi_104 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+._stats_yp6mi_111 {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 14px;
+}
+
+._stat_yp6mi_111 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+._statValue_yp6mi_123 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+._statLabel_yp6mi_130 {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+._actions_yp6mi_135 {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+}
+
+._finishBtn_yp6mi_142, ._deleteBtn_yp6mi_142, ._officialBtn_yp6mi_142 {
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+._officialBtn_yp6mi_142 {
+  border-color: #d9534f;
+  color: #d9534f;
+  font-weight: 600;
+}
+
+._officialBtn_yp6mi_142:hover { background: #fef2f2; border-color: #c9302c; }
+
+._finishBtn_yp6mi_142:hover { border-color: #e6a817; color: #b8860b; }
+._deleteBtn_yp6mi_142:hover { border-color: var(--danger); color: var(--danger); }
+
+._loading_yp6mi_165 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: var(--text-muted);
+}
+
+._spinner_yp6mi_174 {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: _spin_yp6mi_174 0.8s linear infinite;
+}
+
+@keyframes _spin_yp6mi_174 { to { transform: rotate(360deg); } }
+
+._empty_yp6mi_185 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 0;
+  color: var(--text-muted);
+  gap: 12px;
+  font-size: 17px;
+}
+
+._emptyIcon_yp6mi_195 { font-size: 48px; }
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/pages/CreateCompetitionPage.module.css">._page_1voql_1 {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+._container_1voql_6 {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+._header_1voql_12 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+._backBtn_1voql_19 {
+  padding: 8px 16px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+._backBtn_1voql_19:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+._title_1voql_36 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+._error_1voql_42 {
+  padding: 12px 18px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  color: var(--danger);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+._form_1voql_52 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+._field_1voql_58 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+._timeRow_1voql_64 {
+  display: flex;
+  gap: 16px;
+}
+
+._timeRow_1voql_64 ._field_1voql_58 {
+  flex: 1;
+}
+
+._label_1voql_73 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+._input_1voql_79 {
+  padding: 10px 14px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+._input_1voql_79:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+._input_1voql_79::placeholder { color: var(--text-muted); }
+
+._teamsSection_1voql_98 {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+._teamsHeader_1voql_104 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+._sectionTitle_1voql_110 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+._teamCount_1voql_117 {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+._teamBlock_1voql_122 {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+}
+
+._teamHeader_1voql_129 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+._teamIndex_1voql_136 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 48px;
+}
+
+._teamNameInput_1voql_143 {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+._teamNameInput_1voql_143:focus { border-color: var(--accent); }
+._teamNameInput_1voql_143::placeholder { color: var(--text-muted); }
+
+._removeBtn_1voql_158 {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+._removeBtn_1voql_158:hover { border-color: var(--danger); color: var(--danger); }
+
+._members_1voql_172 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 54px;
+  margin-bottom: 8px;
+}
+
+._memberRow_1voql_180 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+._memberIndex_1voql_186 { font-size: 14px; color: var(--text-muted); width: 24px; }
+
+._memberInput_1voql_188 {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+._memberInput_1voql_188:focus { border-color: var(--accent); }
+._memberInput_1voql_188::placeholder { color: var(--text-muted); }
+
+._removeMemberBtn_1voql_202 {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+._removeMemberBtn_1voql_202:hover { border-color: var(--danger); color: var(--danger); }
+
+._addMemberBtn_1voql_216 {
+  margin-left: 54px;
+  padding: 4px 12px;
+  background: var(--bg-white);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+._addMemberBtn_1voql_216:hover { border-color: var(--accent); color: var(--accent); }
+
+._addTeamBtn_1voql_229 {
+  padding: 12px;
+  background: var(--bg-white);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+._addTeamBtn_1voql_229:hover { border-color: var(--accent); color: var(--accent); }
+
+._submitRow_1voql_242 {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+._submitBtn_1voql_248 {
+  padding: 12px 44px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+._submitBtn_1voql_248:hover:not(:disabled) { background: #1557b0; }
+._submitBtn_1voql_248:disabled { opacity: 0.6; cursor: not-allowed; }
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/Footer.module.css">._footer_1m4k8_1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 36px;
+  padding: 0 24px;
+  background: var(--bg-white);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+._item_1m4k8_15 strong {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+._divider_1m4k8_21 {
+  color: var(--border);
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/TeamRankCard.module.css">._row_zfxcb_1 {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--border-light);
+}
+
+._row_zfxcb_1:nth-child(even) { background: var(--row-even); }
+._row_zfxcb_1:hover { background: var(--row-hover); }
+
+._row_zfxcb_1._selected_zfxcb_10 {
+  background: var(--row-selected);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+._row_zfxcb_1._flash_zfxcb_15 { animation: _flashBg_zfxcb_1 0.8s ease-out; }
+
+@keyframes _flashBg_zfxcb_1 {
+  0% { background: var(--gold-light); }
+  100% { background: transparent; }
+}
+
+._row_zfxcb_1:nth-child(even)._flash_zfxcb_15 { animation-name: _flashBgEven_zfxcb_1; }
+
+@keyframes _flashBgEven_zfxcb_1 {
+  0% { background: var(--gold-light); }
+  100% { background: var(--row-even); }
+}
+
+._rank_zfxcb_29 { text-align: center; padding: 8px 10px; }
+
+._rankNum_zfxcb_31 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+._medal1_zfxcb_37, ._medal2_zfxcb_37, ._medal3_zfxcb_37 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+._medal1_zfxcb_37 { background: #f5a623; }
+._medal2_zfxcb_37 { background: #a0a0a0; }
+._medal3_zfxcb_37 { background: #c08a50; }
+
+._name_zfxcb_52 {
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+._score_zfxcb_63 {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+._score_zfxcb_63._locked_zfxcb_72 { color: var(--text-muted); }
+
+._total_zfxcb_74 {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+._count_zfxcb_83 {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/IndividualRankTable.module.css">._table_1jtss_1 {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+._table_1jtss_1 thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+._table_1jtss_1 th {
+  background: var(--th-bg);
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  border-bottom: 2px solid var(--accent);
+  white-space: nowrap;
+}
+
+._thRank_1jtss_24 { width: 48px; }
+._thName_1jtss_25 { text-align: center; }
+._thTeam_1jtss_26 { text-align: center; }
+._thScore_1jtss_27 { width: 70px; }
+
+._row_1jtss_29 {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--border-light);
+}
+
+._row_1jtss_29:nth-child(even) { background: var(--row-even); }
+._row_1jtss_29:hover { background: var(--row-hover); }
+
+._row_1jtss_29._selected_1jtss_38 {
+  background: var(--row-selected);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+._row_1jtss_29._flash_1jtss_43 { animation: _flashBg_1jtss_1 0.8s ease-out; }
+
+@keyframes _flashBg_1jtss_1 {
+  0% { background: var(--gold-light); }
+  100% { background: transparent; }
+}
+
+._row_1jtss_29:nth-child(even)._flash_1jtss_43 { animation-name: _flashBgEven_1jtss_1; }
+
+@keyframes _flashBgEven_1jtss_1 {
+  0% { background: var(--gold-light); }
+  100% { background: var(--row-even); }
+}
+
+._rank_1jtss_57 { text-align: center; padding: 8px 10px; }
+
+._rankNum_1jtss_59 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+._medal1_1jtss_65, ._medal2_1jtss_65, ._medal3_1jtss_65 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+._medal1_1jtss_65 { background: #f5a623; }
+._medal2_1jtss_65 { background: #a0a0a0; }
+._medal3_1jtss_65 { background: #c08a50; }
+
+._name_1jtss_80 {
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+._team_1jtss_91 {
+  padding: 8px 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+._score_1jtss_101 {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+._total_1jtss_110 {
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/ScoreDetailPanel.module.css">._overlay_1esur_1 {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: _fadeIn_1esur_1 0.15s ease-out;
+}
+
+@keyframes _fadeIn_1esur_1 {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+._panel_1esur_17 {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: _scaleIn_1esur_1 0.2s ease-out;
+  overflow: hidden;
+}
+
+@keyframes _scaleIn_1esur_1 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+._header_1esur_36 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+._title_1esur_45 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+._teamName_1esur_51 {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+
+._closeBtn_1esur_58 {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+._closeBtn_1esur_58:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+._content_1esur_79 {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+._section_1esur_88 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+._sectionHeader_1esur_94 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+._sectionTitle_1esur_100 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+._sectionTotal_1esur_105 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+._questions_1esur_112 {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+._question_1esur_112 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  background: var(--row-even);
+  border: 1px solid var(--border-light);
+  min-width: 50px;
+}
+
+._question_1esur_112._passed_1esur_130 {
+  border-color: var(--success);
+  background: var(--accent-light);
+}
+
+._question_1esur_112._failed_1esur_135 {
+  opacity: 0.5;
+}
+
+._qNum_1esur_139 {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+._qScore_1esur_145 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+._qBar_1esur_152 {
+  width: 100%;
+  height: 3px;
+  background: var(--border-light);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+._qBarFill_1esur_160 {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+._summary_1esur_166 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 18px;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+._total_1esur_178 {
+  font-weight: 800;
+  color: var(--accent);
+  font-size: 17px;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/MemberCard.module.css">._card_10yhf_1 {
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 100px;
+  flex: 1;
+}
+
+._card_10yhf_1:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+._card_10yhf_1._selected_10yhf_17 {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+._card_10yhf_1._flash_10yhf_24 {
+  animation: _flash_10yhf_24 0.8s ease-out;
+}
+
+@keyframes _flash_10yhf_24 {
+  0% { background: var(--gold-light); }
+  100% { background: var(--bg-white); }
+}
+
+._card_10yhf_1._selected_10yhf_17._flash_10yhf_24 {
+  animation-name: _flashSel_10yhf_1;
+}
+
+@keyframes _flashSel_10yhf_1 {
+  0% { background: var(--gold-light); }
+  100% { background: var(--accent-light); }
+}
+
+._name_10yhf_42 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+._total_10yhf_49 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+._levels_10yhf_57 {
+  display: flex;
+  gap: 8px;
+}
+
+._level_10yhf_57 {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+._level_10yhf_57._locked_10yhf_67 {
+  color: var(--text-muted);
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/TeamMembersModal.module.css">._overlay_1splv_1 {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: _fadeIn_1splv_1 0.15s ease-out;
+}
+
+@keyframes _fadeIn_1splv_1 {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+._dialog_1splv_17 {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: _scaleIn_1splv_1 0.2s ease-out;
+}
+
+@keyframes _scaleIn_1splv_1 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+._header_1splv_34 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+._title_1splv_43 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+._count_1splv_49 {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-right: auto;
+}
+
+._closeBtn_1splv_55 {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+._closeBtn_1splv_55:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+._content_1splv_76 {
+  padding: 14px 18px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+._grid_1splv_82 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/components/CenterPanel.module.css">._panel_1bs1g_1 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg-white);
+  position: relative;
+  overflow: hidden;
+}
+
+._tabs_1bs1g_11 {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+._tab_1bs1g_11 {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+._tab_1bs1g_11:hover { color: var(--accent); }
+
+._tabActive_1bs1g_36 {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+._searchBox_1bs1g_41 {
+  position: relative;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+._searchIcon_1bs1g_48 {
+  position: absolute;
+  left: 10px;
+  font-size: 13px;
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+._searchInput_1bs1g_56 {
+  padding: 6px 28px 6px 30px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  width: 180px;
+  transition: all 0.2s;
+}
+
+._searchInput_1bs1g_56:focus {
+  border-color: var(--accent);
+  width: 220px;
+  background: var(--bg-white);
+}
+
+._searchInput_1bs1g_56::placeholder {
+  color: var(--text-muted);
+}
+
+._searchClear_1bs1g_79 {
+  position: absolute;
+  right: 6px;
+  width: 18px; height: 18px;
+  border: none;
+  background: var(--border);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+._searchClear_1bs1g_79:hover {
+  background: var(--text-muted);
+  color: #fff;
+}
+
+._tableWrap_1bs1g_101 {
+  flex: 1;
+  overflow-y: auto;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+._tableFade_1bs1g_110 {
+  animation: _fadeIn_1bs1g_1 0.25s ease-out;
+}
+
+@keyframes _fadeIn_1bs1g_1 {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+._tableWrap_1bs1g_101::-webkit-scrollbar {
+  width: 6px;
+}
+._tableWrap_1bs1g_101::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+._table_1bs1g_101 {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+._table_1bs1g_101 thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+._table_1bs1g_101 th {
+  background: var(--th-bg);
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  border-bottom: 2px solid var(--accent);
+  white-space: nowrap;
+}
+
+._thRank_1bs1g_150 { width: 48px; }
+._thName_1bs1g_151 { text-align: center; }
+._thScore_1bs1g_152 { width: 75px; }
+._thCount_1bs1g_153 { width: 48px; }
+
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/pages/CountdownPage.module.css">._page_gtwvx_1 {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+._main_gtwvx_8 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 40px 24px;
+}
+
+/* Hero区域：名称 + 状态 */
+._hero_gtwvx_19 {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+._badge_gtwvx_28 {
+  display: inline-block;
+  padding: 6px 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+._title_gtwvx_40 {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0;
+  line-height: 1.3;
+}
+
+._subtitle_gtwvx_49 {
+  font-size: 17px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* 时钟卡片 */
+._clockBox_gtwvx_56 {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 56px;
+  text-align: center;
+  min-width: 380px;
+  box-shadow: var(--shadow);
+}
+
+._clockLabel_gtwvx_66 {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+._clock_gtwvx_56 {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 4px;
+  line-height: 1.1;
+}
+
+._dateLabel_gtwvx_83 {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+/* 倒计时卡片 */
+._countdownBox_gtwvx_90 {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 48px;
+  text-align: center;
+  min-width: 420px;
+  box-shadow: var(--shadow);
+}
+
+._countdownLabel_gtwvx_100 {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+/* 倒计时数字 */
+._timer_gtwvx_109 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+._timerBlock_gtwvx_116 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 76px;
+}
+
+._timerNum_gtwvx_123 {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+._timerLabel_gtwvx_131 {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+._timerSep_gtwvx_138 {
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--border);
+  margin-bottom: 20px;
+}
+
+/* 进度条 */
+._progressTrack_gtwvx_146 {
+  width: 100%;
+  height: 4px;
+  background: var(--border-light);
+  border-radius: 2px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+._progressBar_gtwvx_155 {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width 1s linear;
+}
+
+/* 已开始提示 */
+._started_gtwvx_163 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 8px 0;
+}
+
+._startedIcon_gtwvx_174 {
+  font-size: 28px;
+  animation: _pulse_gtwvx_1 1s ease-in-out infinite;
+}
+
+@keyframes _pulse_gtwvx_1 {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/App.module.css">._app_fjkk3_1 {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+._main_fjkk3_9 {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/styles/official.css">/* ================================================================
+   GPLT 官方页面样式 — 1:1 精确复制 https://gplt.patest.cn/rank/team
+   CSS 变量通过 inline style 注入 (完全仿照原站)
+   ================================================================ */
+
+/* ---- GPLT-Number 字体 ---- */
+@font-face {
+  font-family: GPLT-Number;
+  src: url("/gplt/gplt-number.woff");
+}
+
+/* ---- 全局基础 ---- */
+body {
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(213, 11%, 20%);
+  line-height: 1.15;
+}
+a { color: hsl(175, 100%, 62%); text-decoration: none; transition: color 0.2s; }
+a:hover { color: hsl(175, 100%, 65%); text-shadow: 0 0 2px hsl(175, 100%, 62%); }
+h1 { font-size: 32px; margin: 0.67em 0; }
+h2 { font-size: 24px; }
+p { font-size: 16px; line-height: 24px; margin: 1em 0; }
+img { vertical-align: unset; }
+
+/* ---- 最外层容器 ---- */
+.mainContainer_zpZoi {
+  min-width: 1200px;
+}
+
+/* ---- GPLT Number ---- */
+.gpltNumber_n12aB,
+.gpltNumber_x1pEx { font-family: GPLT-Number, sans-serif; }
+
+
+/* ================================================================
+   动画
+   ================================================================ */
+@keyframes breath_hgNVP {
+  0%   { filter: drop-shadow(0 0 1px hsl(213, 80%, 50%)); }
+  100% { filter: drop-shadow(0 0 20px hsl(213, 80%, 50%)); }
+}
+@keyframes breathable_wwtrm {
+  0%   { filter: drop-shadow(0 0 1px hsl(213, 80%, 50%)); }
+  100% { filter: drop-shadow(0 0 20px hsl(213, 80%, 50%)); }
+}
+@keyframes shakeY_s8SzD {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1px); }
+  75% { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+/* ================================================================
+   container_KGMv8 (Hero 容器 - 与 wrapper_VkSjg 是兄弟元素)
+   ================================================================ */
+.container_KGMv8 {
+  position: relative;
+}
+
+/* wrapper_Gjsvi (Hero overflow 控制) */
+.wrapper_Gjsvi {
+  overflow: hidden;
+}
+
+/* shortBody_ELmXF (Hero 主体) */
+.shortBody_ELmXF {
+  position: relative;
+  background: var(--bg-image) no-repeat;
+  background-size: 100% 531px;
+  height: 531px;
+}
+.shortBody_ELmXF .rocket_vlZSI {
+  top: auto;
+  bottom: 0;
+}
+.shortBody_ELmXF .top_gG9x9 {
+  max-height: 500px;
+}
+
+/* Hero 内绝对定位元素 */
+.top_gG9x9 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.left_e69CK {
+  animation: breathable_wwtrm ease-in-out 2000ms infinite alternate;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+}
+.right_RTLWm {
+  animation: breathable_wwtrm ease-in-out 2000ms infinite alternate;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.rocket_vlZSI {
+  position: absolute;
+  top: 351px;
+  right: 26%;
+}
+
+/* inner_cEOqe (占位 div) */
+.inner_cEOqe {
+  position: relative;
+}
+
+/* ladder (在 shortBody 内) */
+.container_KGMv8 .ladder_LjuTV {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-left: -500px;
+}
+
+/* 导航链接 (在 shortBody 内) */
+.container_KGMv8 .links_xU9fI {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  width: 800px;
+  margin-left: -400px;
+}
+.container_KGMv8 .links_xU9fI a {
+  display: inline-block;
+  font-size: 25px;
+  width: 50%;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.container_KGMv8 .links_xU9fI a:hover {
+  color: hsl(175, 100%, 62%);
+}
+.container_KGMv8 .links_xU9fI a.active_Eu6E1 {
+  color: hsl(175, 100%, 62%);
+  text-shadow: 0 0 10px hsl(175, 100%, 62%);
+}
+
+/* Logo (在 shortBody 内) */
+.logo_Srcaz {
+  padding-top: 95px;
+  text-align: center;
+}
+.logo_Srcaz img {
+  animation: breath_hgNVP ease-in-out 2s infinite alternate;
+  margin: 0 auto;
+}
+
+/* ================================================================
+   wrapper_VkSjg (主内容 - 与 container_KGMv8 兄弟)
+   ================================================================ */
+.wrapper_VkSjg {
+  position: relative;
+  background-image:
+    var(--planet1-image), var(--planet2-image),
+    var(--planet3-image), var(--stardust-image), var(--bg-image);
+  background-position:
+    -256px 600px, right 0 top 800px,
+    right 100px top 2200px, center 1500px, top center;
+  background-size:
+    auto,
+    auto,
+    auto,
+    1200px auto,
+    100% auto;
+  background-repeat: no-repeat;
+}
+.wrapper_VkSjg .body_W_vNZ {
+  position: relative;
+  width: 100%;
+  padding: 1px 8px;
+}
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 300px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  outline: 1px solid hsla(175, 100%, 62%, 0.6);
+  border-radius: 5px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  background-color: hsla(213, 11%, 20%, 0.1);
+  box-shadow: 0 0 5px hsla(175, 100%, 62%, 0.6);
+  z-index: 10;
+  box-sizing: border-box;
+}
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 h1,
+.wrapper_VkSjg .body_W_vNZ .inner_E9HP3 h2 {
+  color: hsl(175, 100%, 62%);
+}
+
+/* 火箭 + 云 (wrapper 内底部装饰) */
+.wrapper_VkSjg img.rocket_S4f1K {
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover {
+  animation: shakeY_s8SzD infinite 0.16s;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover + img.cloudLeft_yLzW1 {
+  bottom: 0;
+}
+.wrapper_VkSjg img.rocket_S4f1K:hover + img.cloudLeft_yLzW1 + img.cloudRight_a90At {
+  bottom: 0;
+}
+.wrapper_VkSjg img.cloudLeft_yLzW1,
+.wrapper_VkSjg img.cloudRight_a90At {
+  position: absolute;
+  bottom: -168px;
+  transition: bottom 1s;
+  pointer-events: none;
+}
+.wrapper_VkSjg img.cloudLeft_yLzW1 {
+  right: 0;
+}
+.wrapper_VkSjg img.cloudRight_a90At {
+  max-width: 100%;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+/* ================================================================
+   rankTeamPage_KSGze (队伍排名页)
+   ================================================================ */
+.rankTeamPage_KSGze .title_bd_Vy {
+  margin: 25px 0 35px;
+}
+.rankTeamPage_KSGze .title_bd_Vy p.counter_vxdBF {
+  margin: 0;
+  font-size: 18px;
+  color: hsl(0, 0%, 60%);
+}
+.rankTeamPage_KSGze .filterGroup_koIIB {
+  padding: 0 20px;
+  border: dotted hsl(175, 100%, 62%);
+  border-width: 0 0 0 2px;
+  margin-bottom: 15px;
+}
+.rankTeamPage_KSGze .teamList_sy21T {
+  margin-top: 30px;
+}
+
+/* ---- 列表项 ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr {
+  transition: background 0.3s;
+  padding: 12px 5px;
+  cursor: pointer;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr:nth-of-type(odd) {
+  background-color: hsla(0, 0%, 0%, 0.2);
+}
+
+/* ---- badge 10% ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz {
+  display: inline-block;
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz img {
+  height: 40px;
+  width: 34px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .badge_e77kz p {
+  padding: 5px 10px;
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 4px;
+  color: gold;
+}
+
+/* ---- pipes 80% ---- */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa {
+  width: 80%;
+  display: inline-block;
+  white-space: nowrap;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa > div {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* head */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr {
+  background-image: var(--progress-head);
+  height: 50px;
+  width: 45px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr .logo_WqHLc {
+  height: 40px;
+  width: 40px;
+  margin: 6px 5px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .head_FBonr .logo_WqHLc img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+/* pipe body */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ {
+  background-image: var(--progress-pipe);
+  height: 28px;
+  width: 240px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .name_UpmfW {
+  position: absolute;
+  z-index: 15;
+  top: -30px;
+  font-size: 16px;
+  color: hsl(0, 0%, 85%);
+  pointer-events: none;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .badges_S9eE3 {
+  position: absolute;
+  z-index: 9;
+  top: -27px;
+  left: 80%;
+  margin-left: -15px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .badges2_uxJ8K {
+  position: absolute;
+  z-index: 9;
+  top: -27px;
+  left: 40%;
+  margin-left: -15px;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .progressText_k18NH {
+  position: absolute;
+  left: 40%;
+  z-index: 100;
+  margin-top: 30px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .progressText_k18NH > span:first-child {
+  margin-left: -50%;
+}
+
+/* pipe 内 img */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img {
+  display: inline;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.progress_JU3mj {
+  position: relative;
+  z-index: 1;
+  top: 4px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.circle_dkyqW {
+  position: absolute;
+  z-index: 10;
+  margin: -13px -24px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ img.circle3_hbpfT {
+  position: absolute;
+  z-index: 10;
+  margin: -13px -3.5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 颜色 (团队 pipe) */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .blue_tbl_z { color: #7accec; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .yellow_LSYq3 { color: #f7ce27; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .red_uNAog { color: #f04f4f; }
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .pipe_QQ5UZ .grey_SZLno { color: #c5c5c5; }
+
+/* 节点 */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node_D8RD8 {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node1);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node1_q5IIb {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node2);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .node2_X2JzO {
+  position: relative;
+  z-index: 2;
+  background-image: var(--progress-node3);
+  height: 40px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 特殊节点 (CSS 中有定义但实际 GPLT 页面不用) */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .snode0_ySJKe {
+  position: relative;
+  left: -10px;
+  z-index: -1;
+  background-image: var(--progress-snode1);
+  height: 46px;
+  width: 46px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .snode1_rLhVx {
+  position: relative;
+  left: -10px;
+  z-index: -1;
+  background-image: var(--progress-snode2);
+  height: 46px;
+  width: 46px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* tail */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .pipes_JC6Fa .tail_c7ta0 {
+  background-image: var(--progress-tail);
+  width: 45px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* score 10% */
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .score_lqSzX {
+  width: 10%;
+  text-align: center;
+  display: inline-block;
+  color: gold;
+}
+.rankTeamPage_KSGze .teamList_sy21T .teamListItem_qeRUr .score_lqSzX p {
+  font-size: 36px;
+  font-family: GPLT-Number, sans-serif;
+  margin: 0;
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* 空 */
+.empty_mnFop { margin: 50px auto; text-align: center; }
+.empty_mnFop p { font-size: 30px; color: hsl(0, 0%, 40%); }
+
+/* ================================================================
+   rankStudentPage_YXwTc (个人排名页)
+   ================================================================ */
+.rankStudentPage_YXwTc .title_Pdg00 { margin: 25px 0 35px; }
+.rankStudentPage_YXwTc .title_Pdg00 p.counter_YbA0b { margin: 0; font-size: 18px; color: hsl(0, 0%, 60%); }
+.rankStudentPage_YXwTc .studentList_JpA1T { margin-top: 30px; }
+
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 {
+  transition: background 0.3s;
+  padding: 12px 5px;
+  cursor: pointer;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2:hover { background-color: rgba(0, 0, 0, 0.1); }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2:nth-of-type(odd) { background-color: hsla(0, 0%, 0%, 0.2); }
+
+/* badge */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC {
+  display: inline-block; width: 10%; text-align: center; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC img {
+  height: 40px;
+  width: 34px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .badge_xcZuC p {
+  padding: 5px 10px;
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 4px;
+  color: gold;
+}
+
+/* pipes */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ {
+  width: 80%; display: inline-block; white-space: nowrap;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ > div {
+  position: relative; display: inline-block; vertical-align: middle;
+}
+
+/* head */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb {
+  background-image: var(--progress-head); height: 50px; width: 45px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb .logo_bPOkW {
+  height: 40px; width: 40px; margin: 6px 5px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .head_MtmVb .logo_bPOkW img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+/* pipe body */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 {
+  background-image: var(--progress-pipe); height: 28px; width: 240px;
+  background-size: 100% 100%; background-repeat: no-repeat; position: relative;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .name_ETm8P {
+  position: absolute; z-index: 15; top: -30px; font-size: 16px;
+  color: hsl(0, 0%, 85%); pointer-events: none;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .badges_pxPyz {
+  position: absolute; z-index: 9; top: -27px; left: 80%; margin-left: -15px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .badges2_bcVll {
+  position: absolute; z-index: 9; top: -27px; left: 40%; margin-left: -15px;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .progressText_gcOoj {
+  position: absolute; left: 40%; z-index: 100; margin-top: 30px;
+  font-size: 12px; white-space: nowrap; pointer-events: none;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .progressText_gcOoj > span:first-child {
+  margin-left: -50%;
+}
+
+/* pipe 内 img */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.progress_zTSqP {
+  position: relative; z-index: 1; top: 4px; height: 20px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circle_FXZIg {
+  position: absolute; z-index: 10; margin: -13px -24px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circleFull_Kp4vJ {
+  position: absolute; z-index: 10; margin: -12px -6px;
+  display: inline-block; vertical-align: middle;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 img.circle3_HPA2K {
+  position: absolute; z-index: 10; margin: -13px -3.5px;
+  display: inline-block; vertical-align: middle;
+}
+
+/* 颜色 (个人 pipe) */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .blue_wC5RT { color: #7accec; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .yellow_YpF2t { color: #f7ce27; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .red_FMh64 { color: #f04f4f; }
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .grey_gIZ_V { color: #c5c5c5; }
+
+/* 节点 */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node_JIp6m {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node1); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node1_P5XVN {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node2); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node2_zRkMT {
+  position: relative; z-index: 2;
+  background-image: var(--progress-node3); height: 40px; width: 25px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .snode0_mwV9m {
+  position: relative; left: -10px; z-index: -1;
+  background-image: var(--progress-snode1); height: 46px; width: 46px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .snode1_tKJte {
+  position: relative; left: -10px; z-index: -1;
+  background-image: var(--progress-snode2); height: 46px; width: 46px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+
+/* tail */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .tail_YUPwI {
+  background-image: var(--progress-tail); width: 45px; height: 50px;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}
+
+/* score */
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .score_ulq1B {
+  width: 10%; text-align: center; display: inline-block; color: gold;
+}
+.rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .score_ulq1B p {
+  font-size: 36px; font-family: GPLT-Number, sans-serif; margin: 0; line-height: 1; font-weight: 700;
+}
+
+/* 空 */
+.empty_rGDZ6 { margin: 50px auto; text-align: center; }
+.empty_rGDZ6 p { font-size: 30px; color: hsl(0, 0%, 40%); }
+
+/* ================================================================
+   筛选器 (filter_FABER)
+   ================================================================ */
+.filter_FABER { font-size: 18px; }
+.filter_FABER p { margin: 15px 0; line-height: 30px; }
+.filter_FABER p.filterTitle_ECoeK { font-size: 20px; color: hsl(0, 0%, 65%); }
+.filter_FABER p.filterItems_pmO_l span { display: inline-block; }
+.filter_FABER p.filterItems_pmO_l span.filterItem__hGm_ {
+  padding: 1px 10px; border-radius: 4px; cursor: pointer;
+  transition: background 0.2s; color: hsl(0, 0%, 75%);
+}
+.filter_FABER p.filterItems_pmO_l span.filterItem__hGm_:hover { background: hsla(0, 0%, 0%, 0.2); }
+.filter_FABER p.filterItems_pmO_l span.filterItem__hGm_.selected_jntle {
+  background: hsla(0, 0%, 0%, 0.3); color: hsl(175, 100%, 62%);
+}
+
+/* ================================================================
+   全局颜色工具类
+   ================================================================ */
+.blue_tbl_z, .blue_wC5RT, .blue_Cx7bg, .blue_buD1s { color: #7accec; }
+.yellow_LSYq3, .yellow_YpF2t, .yellow_czFWC, .yellow_o9Dr_ { color: #f7ce27; }
+.red_uNAog, .red_FMh64, .red_m4hpo, .red_E1yqp { color: #f04f4f; }
+.grey_SZLno, .grey_gIZ_V { color: #c5c5c5; }
+.gold_y6gQf, .gold_HAo16 { color: #edb700; }
+.purple_zrXMm, .purple_dk971 { color: #ff9ff6; }
+.white_nu68c, .white_E0zuK { color: white; }
+
+/* ================================================================
+   详情对话框
+   ================================================================ */
+.container_wH2cf, .container_WX_L3 { padding: 0 1.25rem; margin: 1.25rem 0; }
+.container_wH2cf .name_NeT8p, .container_WX_L3 .name_AuJI0 { font-style: italic; text-align: center; margin: 20px 0; }
+.container_wH2cf .name_NeT8p .teamname_y9f9N,
+.container_WX_L3 .name_AuJI0 .studentName_Ijs8B { color: #fff200; font-size: 3.3rem; font-weight: 700; }
+.container_wH2cf .name_NeT8p .schoolname_fIu00,
+.container_WX_L3 .name_AuJI0 .teamName_rgf1B { color: white; font-size: 2.4rem; }
+.container_wH2cf .name_NeT8p .schoolname_fIu00:before,
+.container_WX_L3 .name_AuJI0 .teamName_rgf1B:before { content: " - "; }
+
+/* ================================================================
+   官方按钮 / 分页 / 搜索框辅助样式
+   ================================================================ */
+.pc-button {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 5px 12px;
+  line-height: 1.2;
+  background: transparent;
+}
+.pc-button-outline.pc-color-warning { color: #f0ad4e; }
+.float-right { float: right; }
+.mr-4 { margin-right: 1rem; }
+.pagination_olRL8 { color: hsl(0, 0%, 70%); }
+.pagination_olRL8 a { text-shadow: none; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: 0.25rem; }
+.gap-4 { gap: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-center { text-align: center; }
+.text-light { color: hsl(0, 0%, 65%); }
+.pageItem_NmC03 {
+  display: flex;
+  min-width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  color: hsl(0, 0%, 70%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8125rem;
+}
+.pageItem_NmC03:hover,
+.pageItem_NmC03.active_OZSEy {
+  border-color: hsla(0, 0%, 100%, 0.25);
+  background-color: hsla(0, 0%, 100%, 0.08);
+  color: hsl(0, 0%, 95%);
+}
+.pageItem_NmC03.active_OZSEy {
+  background-color: hsl(213, 80%, 45%);
+  color: white;
+}
+.pageItem_NmC03.disabled { pointer-events: none; opacity: 0.55; }
+.searchInput_sxNlz {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding-right: 8px;
+}
+.searchInput_sxNlz input {
+  width: 180px;
+  height: 28px;
+  padding: 6px 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: hsl(0, 0%, 95%);
+  font-size: 14px;
+}
+.searchInput_sxNlz input::placeholder { color: hsl(0, 0%, 60%); font-style: italic; }
+.searchInput_sxNlz button { color: hsl(0, 0%, 65%); }
+@media (min-width: 640px) {
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:items-center { align-items: center; }
+  .sm\:justify-between { justify-content: space-between; }
+  .sm\:justify-start { justify-content: flex-start; }
+  .sm\:text-left { text-align: left; }
+}
+
+/* ================================================================
+   选中/闪烁
+   ================================================================ */
+.teamListItem_qeRUr.gplt-selected,
+.studentListItem_LWYA2.gplt-selected {
+  background-color: hsla(175, 100%, 62%, 0.08) !important;
+  box-shadow: inset 3px 0 0 hsl(175, 100%, 62%);
+}
+.gplt-flash { animation: gplt-flashAnim 0.8s ease-out; }
+@keyframes gplt-flashAnim {
+  0% { background-color: hsla(175, 100%, 62%, 0.15); }
+  100% { background-color: transparent; }
+}
+.teamListItem_qeRUr:nth-of-type(odd).gplt-flash,
+.studentListItem_LWYA2:nth-of-type(odd).gplt-flash {
+  animation-name: gplt-flashAnimOdd;
+}
+@keyframes gplt-flashAnimOdd {
+  0% { background-color: hsla(175, 100%, 62%, 0.15); }
+  100% { background-color: hsla(0, 0%, 0%, 0.2); }
+}
+
+/* ================================================================
+   奖项徽章
+   ================================================================ */
+.gplt-awardBadge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; }
+.gplt-awardGold   { background: #edb700; color: #000; }
+.gplt-awardSilver { background: #869099; color: #fff; }
+.gplt-awardBronze { background: #d4621a; color: #fff; }
+
+/* ================================================================
+   header_ELHeQ
+   ================================================================ */
+.header_ELHeQ {
+  position: fixed; background: linear-gradient(#0a2f5c, transparent);
+  top: 0; left: 0; width: 100%; z-index: 20;
+}
+ul.menus_qa4xX {
+  list-style: none; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0;
+  white-space: nowrap; overflow-x: auto; display: flex; justify-content: space-between;
+}
+ul.menus_qa4xX li { display: inline-block; text-align: center; padding: 0 16px; }
+ul.menus_qa4xX li a { display: block; }
+ul.menus_qa4xX li a.active_BQebx,
+ul.menus_qa4xX li a:hover { background: radial-gradient(hsl(213, 80%, 60%), transparent 80%); text-decoration: none; }
+ul.menus_qa4xX li p { margin: 0; font-size: 18px; line-height: 64px; color: hsla(0, 0%, 100%, 0.8); }
+</style><style type="text/css" data-vite-dev-id="D:/ncwu-cccc-dashboard/src/pages/OfficialLiveScreenPage.module.css">/* ===== 官方版页面容器 — 允许自然滚动 (仿 GPLT) ===== */
+._page_jgza5_2 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: hsl(213, 11%, 20%);
+  color: hsl(0, 0%, 75%);
+  font-family: ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+}
+
+/* ===== GPLT 风格固定 header ===== */
+._header_jgza5_15 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 64px;
+  background: linear-gradient(#0a2f5c, transparent);
+  gap: 16px;
+}
+
+._backBtn_jgza5_29 {
+  padding: 4px 14px;
+  border: 1px solid hsla(175, 100%, 62%, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: hsl(175, 100%, 62%);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+._backBtn_jgza5_29:hover {
+  background: hsla(175, 100%, 62%, 0.1);
+  border-color: hsl(175, 100%, 62%);
+}
+
+._title_jgza5_46 {
+  font-size: 16px;
+  font-weight: 700;
+  color: hsl(175, 100%, 62%);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+._headerRight_jgza5_56 {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+._subtitle_jgza5_63 {
+  font-size: 12px;
+  color: hsl(0, 0%, 50%);
+}
+._clock_jgza5_67 {
+  font-size: 13px;
+  color: hsl(0, 0%, 60%);
+  font-variant-numeric: tabular-nums;
+}
+
+._simpleLink_jgza5_73 {
+  padding: 4px 12px;
+  border: 1px solid hsla(0, 0%, 100%, 0.15);
+  border-radius: 4px;
+  background: hsla(0, 0%, 100%, 0.05);
+  color: hsl(0, 0%, 55%);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+._simpleLink_jgza5_73:hover {
+  background: hsla(0, 0%, 100%, 0.12);
+  color: hsl(0, 0%, 80%);
+}
+</style></head>
+  <body style="overflow: visible;">
+    <div id="root" style="overflow: visible;"><div class="_page_jgza5_2"><div class="mainContainer_zpZoi"><div class="container_KGMv8"><div class="wrapper_Gjsvi"><div class="shortBody_ELmXF" style="--bg-image: url(/gplt/bg-hero.jpg);"><img class="left_e69CK" alt="leftLight" src="/gplt/team-assets/1d4f0bd3-a090-4ed6-8637-12e2394b80c6.png"><img class="right_RTLWm" alt="rightLight" src="/gplt/team-assets/5c7372e5-2e3a-4d93-b535-10fa3012649d.png"><img class="rocket_vlZSI" alt="rocket" src="/gplt/team-assets/b103afab-4223-4d34-b3c4-29bae6bbfa7e.png"><img class="top_gG9x9" alt="top" src="/gplt/team-assets/58493d75-9ff9-47df-bf0a-1226374fe917.png"><div class="inner_cEOqe"></div><img class="ladder_LjuTV" alt="ladder" src="/gplt/team-assets/cde5ca70-9633-408f-be36-c154617f8165.png"><div class="links_xU9fI"><a class="">团队排名</a><a class="active_Eu6E1">个人排名</a></div><div class="logo_Srcaz"><img alt="logo" src="/gplt/team-assets/620d9910-8b12-4a2d-bb9e-76a640daf0aa.png"></div></div></div></div><div class="wrapper_VkSjg" style="--bg-image: url(/gplt/bg-main.jpg); --planet1-image: url(/gplt/planet1.png); --planet2-image: url(/gplt/planet2.png); --planet3-image: url(/gplt/planet3.png); --stardust-image: url(/gplt/stardust.png);"><div class="body_W_vNZ"><div class="inner_E9HP3"><div class="rankStudentPage_YXwTc" style="--progress-head: url(/gplt/progress-head.png); --progress-node1: url(/gplt/progress-node1.png); --progress-node2: url(/gplt/progress-node2.png); --progress-node3: url(/gplt/progress-node3.png); --progress-pipe: url(/gplt/progress-pipe.png); --progress-snode1: url(/gplt/progress-snode1.png); --progress-snode2: url(/gplt/progress-snode2.png); --progress-tail: url(/gplt/progress-tail.png);"><div class="title_Pdg00"><button class="pc-button float-right pc-button-outline pc-color-warning cursor-pointer" type="button"><div class="pc-text pc-color-inherit whitespace-nowrap pc-trs-normal shrink no-grow"><div class="pc-text-raw ellipsis" style="text-align: center;">极简模式</div></div></button><h1 id="个人排名" class="anchorTitle_jVGN2"><a href="#个人排名">个人排名</a></h1></div><div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pagination_olRL8"><div class="text-sm text-light text-center sm:text-left">显示 1 至 69 条，共 69 条数据</div><div class="flex items-center gap-1 justify-center sm:justify-start"><a class="disabled cursor-not-allowed pc-color-light pageItem_NmC03 hover:no-underline"><span>‹</span></a><a class="active pageItem_NmC03 active_OZSEy hover:no-underline"><span>1</span></a><a class="disabled cursor-not-allowed pc-color-light pageItem_NmC03 hover:no-underline"><span>›</span></a></div></div><div style="clear: both;"></div><div class="studentList_JpA1T"><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><img class="badge_xcZuC" alt="badge" src="/gplt/student-assets/702ca311-1f24-4570-a91c-392618d16ffa.png"></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈娜 - 极光编程组</span><img class="progress_zTSqP" title="75 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 75%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="89 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 89%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="71 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 78.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">235</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><img class="badge_xcZuC" alt="badge" src="/gplt/student-assets/9e23a449-472e-4172-838c-ad720bf65bb8.png"></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周娜 - 算法猎手</span><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 65%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="88 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 88%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="81 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 90%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">234</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><img class="badge_xcZuC" alt="badge" src="/gplt/student-assets/9e23a449-472e-4172-838c-ad720bf65bb8.png"></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林磊 - 天梯先锋队</span><img class="progress_zTSqP" title="84 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 84%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="77 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 77%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="71 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 78.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">232</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>4</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">张秀英 - 凌云战队</span><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 79%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="77 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 77%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="66 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 73.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">222</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>5</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林磊 - 极光编程组</span><img class="progress_zTSqP" title="69 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 69%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="88 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 88%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 71.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">221</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>6</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周静 - 算法猎手</span><img class="progress_zTSqP" title="73 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 73%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 79%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="62 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 68.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">214</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>7</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">何芳 - 极光编程组</span><img class="progress_zTSqP" title="48 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 48%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="85 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 85%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="78 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 86.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">211</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>8</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王军 - 天梯先锋队</span><img class="progress_zTSqP" title="51 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 51%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="83 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 83%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="73 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 81.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">207</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>9</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">黄超 - 破晓突击队</span><img class="progress_zTSqP" title="80 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 80%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="61 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 61%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="65 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 72.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">206</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>10</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">孙平 - 星辰大海队</span><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 79%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="48 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 48%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="79 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 87.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">206</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>11</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">杨华 - 代码特工队</span><img class="progress_zTSqP" title="73 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 73%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="69 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 69%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 71.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">206</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>12</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">罗刚 - 无限火力队</span><img class="progress_zTSqP" title="68 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 68%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 60%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="76 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 84.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">204</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>13</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林军 - 天梯先锋队</span><img class="progress_zTSqP" title="56 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 56%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 79%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="68 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 75.5556%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">203</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>14</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">黄敏 - 星辰大海队</span><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 71%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="85 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 85%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="46 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 51.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">202</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>15</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈芳 - 破晓突击队</span><img class="progress_zTSqP" title="74 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 74%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="78 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 78%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 54.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">201</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>16</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈秀英 - 星辰大海队</span><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 71%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="57 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 57%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="73 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 81.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">201</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>17</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">马平 - 极光编程组</span><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 71%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="54 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 54%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="76 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 84.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">201</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>18</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">吴明 - 代码特工队</span><img class="progress_zTSqP" title="72 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 72%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="59 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 59%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="70 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 77.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">201</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>19</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周磊 - 无限火力队</span><img class="progress_zTSqP" title="72 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 72%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="62 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 62%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="66 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 73.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">200</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>20</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈伟 - 天梯先锋队</span><img class="progress_zTSqP" title="52 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 52%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="83 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 83%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 71.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">199</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>21</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王芳 - 星辰大海队</span><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 79%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="36 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 36%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="84 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 93.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">199</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>22</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林强 - 无限火力队</span><img class="progress_zTSqP" title="72 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 72%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="57 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 57%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="69 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 76.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">198</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>23</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">罗杰 - 极光编程组</span><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 71%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="84 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 84%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="42 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 46.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">197</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>24</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">黄涛 - 极光编程组</span><img class="progress_zTSqP" title="80 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 80%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 64%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="51 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 56.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">195</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>25</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周磊 - 天梯先锋队</span><img class="progress_zTSqP" title="55 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 55%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="84 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 84%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="55 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 61.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">194</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>26</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">何刚 - 算法猎手</span><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 65%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="56 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 56%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="71 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 78.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">192</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>27</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">张明 - 代码特工队</span><img class="progress_zTSqP" title="30 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 30%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="87 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 87%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="75 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 83.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">192</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>28</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">赵秀英 - 无限火力队</span><img class="progress_zTSqP" title="61 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 61%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="62 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 62%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="69 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 76.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">192</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>29</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">何明 - 无限火力队</span><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 65%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="77 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 77%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 54.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">191</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>30</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">徐平 - 无限火力队</span><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 65%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 71%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="55 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 61.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">191</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>31</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈娜 - 星辰大海队</span><img class="progress_zTSqP" title="56 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 56%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="67 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 67%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="66 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 73.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">189</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>32</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">郭平 - 无限火力队</span><img class="progress_zTSqP" title="80 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 80%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="61 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 61%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="46 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 51.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">187</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>33</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">罗强 - 极光编程组</span><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 79%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 65%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="43 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 47.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">187</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>34</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈超 - 天梯先锋队</span><img class="progress_zTSqP" title="46 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 46%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="78 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 78%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="62 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 68.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">186</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>35</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">马平 - 天梯先锋队</span><img class="progress_zTSqP" title="64 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 64%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="40 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 40%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="81 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 90%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">185</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>36</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">吴华 - 破晓突击队</span><img class="progress_zTSqP" title="61 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 61%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="67 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 67%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="56 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 62.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">184</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>37</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">孙超 - 算法猎手</span><img class="progress_zTSqP" title="47 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 47%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 60%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="76 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 84.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">183</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>38</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">李明 - 极光编程组</span><img class="progress_zTSqP" title="80 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 80%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="83 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 83%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="19 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 21.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">182</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>39</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王桂英 - 代码特工队</span><img class="progress_zTSqP" title="70 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 70%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="82 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 82%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="29 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 32.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">181</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>40</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王磊 - 天梯先锋队</span><img class="progress_zTSqP" title="46 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 46%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 71%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 71.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">181</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>41</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">郭勇 - 凌云战队</span><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 60%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="72 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 72%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="48 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 53.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">180</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>42</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">陈磊 - 破晓突击队</span><img class="progress_zTSqP" title="77 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 77%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="56 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 56%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="46 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 51.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">179</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>43</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">赵伟 - 星辰大海队</span><img class="progress_zTSqP" title="72 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 72%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="40 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 40%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="66 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 73.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">178</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>44</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">马超 - 算法猎手</span><img class="progress_zTSqP" title="66 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 66%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="41 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 41%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="68 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 75.5556%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">175</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>45</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">赵芳 - 算法猎手</span><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 60%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="65 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 65%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 54.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">174</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>46</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">孙强 - 破晓突击队</span><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 60%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="38 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 38%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="75 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 83.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">173</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>47</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王静 - 极光编程组</span><img class="progress_zTSqP" title="35 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 35%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="64 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 64%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="74 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 82.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">173</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>48</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">黄强 - 代码特工队</span><img class="progress_zTSqP" title="67 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 67%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="56 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 56%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 54.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">172</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>49</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周平 - 算法猎手</span><img class="progress_zTSqP" title="54 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 54%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="79 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 79%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="39 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 43.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">172</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>50</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">吴华 - 代码特工队</span><img class="progress_zTSqP" title="33 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 33%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 60%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="76 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 84.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">169</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>51</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">胡娜 - 星辰大海队</span><img class="progress_zTSqP" title="45 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 45%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 49%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="73 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 81.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">167</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>52</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">郭芳 - 凌云战队</span><img class="progress_zTSqP" title="17 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 17%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="76 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 76%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="73 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 81.1111%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">166</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>53</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">罗华 - 极光编程组</span><img class="progress_zTSqP" title="66 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 66%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="52 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 52%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="48 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 53.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">166</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>54</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林洋 - 凌云战队</span><img class="progress_zTSqP" title="37 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 37%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="59 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 59%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="69 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 76.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">165</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>55</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">李芳 - 破晓突击队</span><img class="progress_zTSqP" title="57 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 57%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="36 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 36%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="68 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 75.5556%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">161</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>56</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">徐丽 - 破晓突击队</span><img class="progress_zTSqP" title="49 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 49%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="33 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 33%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="79 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 87.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">161</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>57</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">朱敏 - 算法猎手</span><img class="progress_zTSqP" title="48 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 48%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="87 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 87%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="25 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 27.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">160</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>58</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">林超 - 凌云战队</span><img class="progress_zTSqP" title="53 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 53%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="86 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 86%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="18 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 20%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">157</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>59</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">周勇 - 破晓突击队</span><img class="progress_zTSqP" title="50 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 50%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="55 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 55%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="51 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 56.6667%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">156</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>60</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">罗磊 - 凌云战队</span><img class="progress_zTSqP" title="68 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 68%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="57 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 57%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="30 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 33.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">155</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>61</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">郭涛 - 凌云战队</span><img class="progress_zTSqP" title="45 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 45%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="61 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 61%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="45 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 50%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">151</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>62</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">张勇 - 天梯先锋队</span><img class="progress_zTSqP" title="71 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 71%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="39 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 39%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="41 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 45.5556%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">151</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>63</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">李桂英 - 无限火力队</span><img class="progress_zTSqP" title="47 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 47%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="58 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 58%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="44 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 48.8889%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">149</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>64</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">王杰 - 破晓突击队</span><img class="progress_zTSqP" title="46 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 46%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="18 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 18%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="83 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 92.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">147</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>65</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">胡洋 - 代码特工队</span><img class="progress_zTSqP" title="77 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 77%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="45 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 45%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="21 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 23.3333%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">143</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>66</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">吴秀英 - 代码特工队</span><img class="progress_zTSqP" title="51 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 51%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="67 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 67%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="25 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 27.7778%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">143</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>67</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">孙超 - 凌云战队</span><img class="progress_zTSqP" title="54 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 54%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="66 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 66%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="22 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 24.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">142</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>68</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">黄敏 - 星辰大海队</span><img class="progress_zTSqP" title="43 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 43%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="60 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 60%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="38 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 42.2222%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">141</p></div></div><div class="studentListItem_LWYA2  "><div class="badge_xcZuC"><p>69</p></div><div class="pipes_IXOBJ"><div class="head_MtmVb"><div class="pc-image min-w-0 items-center justify-center inline-flex logo_bPOkW"><img alt="校徽" src="/gplt/logo-ncwu.png"></div></div><div class="pipe_DLbm3"><span class="name_ETm8P">李芳 - 凌云战队</span><img class="progress_zTSqP" title="40 / 100" alt="progress" src="/gplt/student-assets/3079c545-5b3e-4bc9-8e01-71d42490b25c.png" style="width: 40%;"></div><div class="node1_P5XVN"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="52 / 100" alt="progress" src="/gplt/student-assets/0394fbe5-3914-4696-81e3-91d3549c0f10.png" style="width: 52%;"><div class="badges2_bcVll"></div></div><div class="node2_zRkMT"></div><div class="pipe_DLbm3"><img class="progress_zTSqP" title="49 / 90" alt="progress" src="/gplt/student-assets/bc20a93b-d4e1-4f68-b3e6-e05546fbbaa2.png" style="width: 54.4444%;"><img class="circle_FXZIg" alt="node" src="/gplt/student-assets/f23bd2d9-a27b-41b6-9b74-4688e7c0d437.png"><div class="badges2_bcVll"></div></div><div class="tail_YUPwI"></div></div><div class="score_ulq1B"><p class="gpltNumber_x1pEx">141</p></div></div></div></div></div></div><div style="position: relative; margin-top: 40px;"><img class="rocket_S4f1K" alt="rocket" src="/gplt/team-assets/a599e0df-22eb-41a3-87d7-024b03f8c0f3.png"><img class="cloudLeft_yLzW1" alt="cloud-left" src="/gplt/team-assets/83f91ff3-68f8-4eb8-b516-2653de53fb52.png"><img class="cloudRight_a90At" alt="cloud-right" src="/gplt/team-assets/83f91ff3-68f8-4eb8-b516-2653de53fb52.png"></div></div></div></div></div>
+    <script type="module" src="/src/main.tsx?t=1781688619292"></script>
+  
+
+</body></html>

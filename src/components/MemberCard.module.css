@@ -1,0 +1,69 @@
+.card {
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 100px;
+  flex: 1;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.card.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.card.flash {
+  animation: flash 0.8s ease-out;
+}
+
+@keyframes flash {
+  0% { background: var(--gold-light); }
+  100% { background: var(--bg-white); }
+}
+
+.card.selected.flash {
+  animation-name: flashSel;
+}
+
+@keyframes flashSel {
+  0% { background: var(--gold-light); }
+  100% { background: var(--accent-light); }
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.total {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.levels {
+  display: flex;
+  gap: 8px;
+}
+
+.level {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.level.locked {
+  color: var(--text-muted);
+}

@@ -1,0 +1,261 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.backBtn {
+  padding: 8px 16px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.backBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.error {
+  padding: 12px 18px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  color: var(--danger);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeRow {
+  display: flex;
+  gap: 16px;
+}
+
+.timeRow .field {
+  flex: 1;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.input {
+  padding: 10px 14px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.teamsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.teamsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.teamCount {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.teamBlock {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+}
+
+.teamHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.teamIndex {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 48px;
+}
+
+.teamNameInput {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.teamNameInput:focus { border-color: var(--accent); }
+.teamNameInput::placeholder { color: var(--text-muted); }
+
+.removeBtn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.removeBtn:hover { border-color: var(--danger); color: var(--danger); }
+
+.members {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 54px;
+  margin-bottom: 8px;
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.memberIndex { font-size: 14px; color: var(--text-muted); width: 24px; }
+
+.memberInput {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+.memberInput:focus { border-color: var(--accent); }
+.memberInput::placeholder { color: var(--text-muted); }
+
+.removeMemberBtn {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.removeMemberBtn:hover { border-color: var(--danger); color: var(--danger); }
+
+.addMemberBtn {
+  margin-left: 54px;
+  padding: 4px 12px;
+  background: var(--bg-white);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.addMemberBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.addTeamBtn {
+  padding: 12px;
+  background: var(--bg-white);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.addTeamBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.submitRow {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.submitBtn {
+  padding: 12px 44px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.submitBtn:hover:not(:disabled) { background: #1557b0; }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
