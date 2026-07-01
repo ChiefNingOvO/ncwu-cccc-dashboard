@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createCompetition } from '../services/api';
 import styles from './CreateCompetitionPage.module.css';
 
-interface TeamForm {
-  id: string;
-  name: string;
-  members: string[];
-}
-
-let teamCounter = 0;
+const TEAMS_JSON_EXAMPLE = `[
+  {
+    "name": "ACM 一队",
+    "members": ["张三", "李四", "王五", "赵六", "孙七", "周八", "吴九", "郑十"]
+  },
+  {
+    "name": "ACM 二队",
+    "members": ["陈一", "刘二", "黄三", "林四", "杨五", "朱六", "马七", "高八"]
+  }
+]`;
 
 export function CreateCompetitionPage() {
   const navigate = useNavigate();
@@ -17,49 +20,25 @@ export function CreateCompetitionPage() {
   const [startTime, setStartTime] = useState('');
   const [duration, setDuration] = useState(180);
   const [accessCookie, setAccessCookie] = useState('');
-  const [teams, setTeams] = useState<TeamForm[]>([
-    { id: `t-${++teamCounter}`, name: '', members: [''] },
-  ]);
+  const [ptaContestId, setPtaContestId] = useState('');
+  const [teamsJson, setTeamsJson] = useState(TEAMS_JSON_EXAMPLE);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const addTeam = () => {
-    setTeams(prev => [...prev, { id: `t-${++teamCounter}`, name: '', members: [''] }]);
-  };
-
-  const removeTeam = (teamId: string) => {
-    if (teams.length <= 1) return;
-    setTeams(prev => prev.filter(t => t.id !== teamId));
-  };
-
-  const updateTeamName = (teamId: string, name: string) => {
-    setTeams(prev => prev.map(t => t.id === teamId ? { ...t, name } : t));
-  };
-
-  const updateMemberName = (teamId: string, memberIdx: number, name: string) => {
-    setTeams(prev => prev.map(t => {
-      if (t.id !== teamId) return t;
-      const members = [...t.members];
-      members[memberIdx] = name;
-      return { ...t, members };
-    }));
-  };
-
-  const addMember = (teamId: string) => {
-    setTeams(prev => prev.map(t => {
-      if (t.id !== teamId) return t;
-      if (t.members.length >= 10) return t; // 最多 10 人
-      return { ...t, members: [...t.members, ''] };
-    }));
-  };
-
-  const removeMember = (teamId: string, memberIdx: number) => {
-    setTeams(prev => prev.map(t => {
-      if (t.id !== teamId) return t;
-      if (t.members.length <= 1) return t;
-      return { ...t, members: t.members.filter((_, i) => i !== memberIdx) };
-    }));
-  };
+  // 创建页需要滚动，覆盖全局 #root overflow:hidden
+  useEffect(() => {
+    const root = document.getElementById('root');
+    const html = document.documentElement;
+    const body = document.body;
+    if (root) root.style.overflow = 'visible';
+    html.style.overflow = 'visible';
+    body.style.overflow = 'visible';
+    return () => {
+      if (root) root.style.overflow = '';
+      html.style.overflow = '';
+      body.style.overflow = '';
+    };
+  }, []);
 
   const handleSubmit = async () => {
     setError('');
@@ -69,31 +48,59 @@ export function CreateCompetitionPage() {
       return;
     }
 
-    const validTeams = teams.filter(t => t.name.trim());
-    if (validTeams.length === 0) {
+    if (!accessCookie.trim()) {
+      setError('请输入访问口令（Access Cookie）');
+      return;
+    }
+
+    // 解析 JSON
+    let parsedTeams: { name: string; members: string[] }[];
+    try {
+      parsedTeams = JSON.parse(teamsJson);
+    } catch {
+      setError('队伍信息 JSON 格式错误，请检查语法');
+      return;
+    }
+
+    if (!Array.isArray(parsedTeams) || parsedTeams.length === 0) {
       setError('至少需要一个队伍');
       return;
     }
 
-    for (const team of validTeams) {
-      const validMembers = team.members.filter(m => m.trim());
+    const validTeams: { name: string; members: string[] }[] = [];
+    for (const team of parsedTeams) {
+      if (!team.name || typeof team.name !== 'string' || !team.name.trim()) {
+        setError('队伍名称不能为空');
+        return;
+      }
+      if (!Array.isArray(team.members) || team.members.length === 0) {
+        setError(`队伍「${team.name}」至少需要一名队员`);
+        return;
+      }
+      const validMembers = team.members.filter(m => typeof m === 'string' && m.trim());
       if (validMembers.length === 0) {
         setError(`队伍「${team.name}」至少需要一名队员`);
         return;
       }
+      if (validMembers.length > 10) {
+        setError(`队伍「${team.name}」队员数量不能超过 10 人`);
+        return;
+      }
+      validTeams.push({
+        name: team.name.trim(),
+        members: validMembers.map(m => m.trim()),
+      });
     }
 
     setSubmitting(true);
     try {
       await createCompetition({
         name: compName.trim(),
-        teams: validTeams.map(t => ({
-          name: t.name.trim(),
-          members: t.members.filter(m => m.trim()),
-        })),
+        teams: validTeams,
         start_time: startTime ? startTime.replace('T', ' ') : undefined,
         duration_minutes: duration,
-        access_cookie: accessCookie.trim() || undefined,
+        access_cookie: accessCookie.trim(),
+        pta_contest_id: ptaContestId.trim() || undefined,
       });
       navigate('/');
     } catch (err) {
@@ -150,71 +157,48 @@ export function CreateCompetitionPage() {
               />
             </div>
           </div>
+
           <div className={styles.field}>
-            <label className={styles.label}>访问口令（Access Cookie）</label>
+            <label className={styles.label}>
+              访问口令（Access Cookie）<span className={styles.required}>*必填</span>
+            </label>
+            <textarea
+              className={styles.cookieTextarea}
+              value={accessCookie}
+              onChange={e => setAccessCookie(e.target.value)}
+              placeholder="从浏览器复制完整的 Cookie 字符串粘贴到这里"
+              rows={3}
+              spellCheck={false}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>PTA 比赛 ID</label>
             <input
               className={styles.input}
               type="text"
-              value={accessCookie}
-              onChange={e => setAccessCookie(e.target.value)}
-              placeholder="自定义访问口令（可选）"
+              value={ptaContestId}
+              onChange={e => setPtaContestId(e.target.value)}
+              placeholder="例如：123456"
               maxLength={50}
             />
           </div>
 
-          <div className={styles.teamsSection}>
-            <div className={styles.teamsHeader}>
-              <h2 className={styles.sectionTitle}>队伍信息</h2>
-              <span className={styles.teamCount}>{teams.length} 支队伍</span>
-            </div>
-
-            {teams.map((team, ti) => (
-              <div key={team.id} className={styles.teamBlock}>
-                <div className={styles.teamHeader}>
-                  <span className={styles.teamIndex}>队伍 {ti + 1}</span>
-                  <input
-                    className={styles.teamNameInput}
-                    type="text"
-                    value={team.name}
-                    onChange={e => updateTeamName(team.id, e.target.value)}
-                    placeholder="输入队伍名称"
-                    maxLength={20}
-                  />
-                  {teams.length > 1 && (
-                    <button className={styles.removeBtn} onClick={() => removeTeam(team.id)}>✕</button>
-                  )}
-                </div>
-
-                <div className={styles.members}>
-                  {team.members.map((member, mi) => (
-                    <div key={mi} className={styles.memberRow}>
-                      <span className={styles.memberIndex}>{mi + 1}.</span>
-                      <input
-                        className={styles.memberInput}
-                        type="text"
-                        value={member}
-                        onChange={e => updateMemberName(team.id, mi, e.target.value)}
-                        placeholder={`队员 ${mi + 1} 姓名`}
-                        maxLength={10}
-                      />
-                      {team.members.length > 1 && (
-                        <button className={styles.removeMemberBtn} onClick={() => removeMember(team.id, mi)}>−</button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {team.members.length < 10 && (
-                  <button className={styles.addMemberBtn} onClick={() => addMember(team.id)}>
-                    + 添加队员
-                  </button>
-                )}
-              </div>
-            ))}
-
-            <button className={styles.addTeamBtn} onClick={addTeam}>
-              + 添加队伍
-            </button>
+          <div className={styles.field}>
+            <label className={styles.label}>
+              队伍信息（JSON 格式）<span className={styles.required}>*必填</span>
+            </label>
+            <textarea
+              className={styles.jsonTextarea}
+              value={teamsJson}
+              onChange={e => setTeamsJson(e.target.value)}
+              rows={16}
+              spellCheck={false}
+            />
+            <p className={styles.jsonHint}>
+              格式：{'{'}"name": "队伍名", "members": ["队员1", "队员2", ...]{'}'}
+              ，每队最多 10 名队员
+            </p>
           </div>
 
           <div className={styles.submitRow}>

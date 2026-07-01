@@ -58,6 +58,7 @@
   border-radius: var(--radius-lg);
   padding: 20px 22px;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -105,6 +106,13 @@
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 16px;
+}
+
+.ptaId {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: -10px 0 14px;
+  font-weight: 500;
 }
 
 .stats {

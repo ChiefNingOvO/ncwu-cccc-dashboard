@@ -23,8 +23,9 @@ export function Header({ title, showBack = true }: HeaderProps) {
   const timeStr = time.toLocaleTimeString('zh-CN', { hour12: false });
   const dateStr = time.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
 
-  // 仅在 /live/:id (简约版) 显示「官方版」入口
+  // 判断当前是简约版还是官方版
   const isSimpleLive = !!id && /^\/live\/[^/]+$/.test(location.pathname);
+  const isOfficialLive = !!id && /^\/live\/[^/]+\/official$/.test(location.pathname);
 
   return (
     <header className={styles.header}>
@@ -44,6 +45,15 @@ export function Header({ title, showBack = true }: HeaderProps) {
             title="切换到官方版大屏"
           >
             🏆 官方版
+          </button>
+        )}
+        {isOfficialLive && (
+          <button
+            className={styles.officialEntryBtn}
+            onClick={() => navigate(`/live/${id}`)}
+            title="切换到简约版大屏"
+          >
+            📊 简约版
           </button>
         )}
         <button className={styles.themeBtn} onClick={nextTheme} title="切换主题">

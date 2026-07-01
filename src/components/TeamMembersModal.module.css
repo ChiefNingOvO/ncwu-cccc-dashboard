@@ -1,86 +1,177 @@
 .overlay {
   position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: var(--overlay);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.15s ease-out;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: hsla(0, 0%, 0%, 0.5);
+  text-align: center;
+  overflow: auto;
+  z-index: 30;
+  padding: 2rem 0;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.dialog {
-  background: var(--bg-white);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+.container {
+  position: relative;
   width: 90%;
-  max-width: 640px;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  animation: scaleIn 0.2s ease-out;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: rgba(34, 38, 63, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  text-align: left;
+  display: inline-block;
 }
 
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.header {
+.titleArea {
+  padding: 1rem 1rem 0.5rem;
+  border-bottom: 2px solid hsl(175, 100%, 62%);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
 }
 
-.title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.count {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-right: auto;
+.teamName {
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffd700;
+  font-family: SimSun, songti, serif;
 }
 
 .closeBtn {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--bg-white);
-  color: var(--text-secondary);
+  font-size: 36px;
+  color: rgba(255,255,255,0.7);
+  background: none;
+  border: none;
   cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-  flex-shrink: 0;
+  padding: 0 10px;
+  line-height: 1;
 }
 
 .closeBtn:hover {
-  border-color: var(--danger);
-  color: var(--danger);
+  color: #fff;
 }
 
-.content {
-  padding: 14px 18px;
-  overflow-y: auto;
-  flex: 1;
+.tableWrapper {
+  padding: 1rem;
+  overflow-x: auto;
 }
 
-.grid {
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  font-family: SimSun, songti, serif;
+}
+
+.table thead th {
+  padding: 8px 6px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: SimSun, songti, serif;
+}
+
+.levelHeader {
+  font-size: 18px !important;
+  padding-bottom: 12px !important;
+}
+
+.qHeaderRow th[data-stage="basic"] {
+  background: rgba(122, 204, 236, 0.2);
+}
+
+.qHeaderRow th[data-stage="advanced"] {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.qHeaderRow th[data-stage="top"] {
+  background: rgba(255, 107, 107, 0.2);
+}
+
+.nameHeader {
+  width: 200px;
+}
+
+.nameCell {
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 6px;
+  text-align: left;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+}
+
+.avatar {
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+}
+
+.qCell {
+  padding: 8px 6px;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.qCell[data-stage="basic"] {
+  background: rgba(122, 204, 236, 0.15);
+}
+
+.qCell[data-stage="advanced"] {
+  background: rgba(255, 215, 0, 0.15);
+}
+
+.qCell[data-stage="top"] {
+  background: rgba(255, 107, 107, 0.15);
+}
+
+.qCell[data-stage="basic"][data-pass="true"] {
+  color: #7accec;
+}
+
+.qCell[data-stage="advanced"][data-pass="true"] {
+  color: #ffd700;
+}
+
+.qCell[data-stage="top"][data-pass="true"] {
+  color: #ff6b6b;
+}
+
+.qCell[data-locked="true"] {
+  color: rgba(255,255,255,0.3);
+}
+
+.totalHeader {
+  font-size: 16px;
+  color: #ffd700;
+}
+
+.totalCell {
+  color: #ffd700;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.effectiveHeader {
+  font-size: 16px;
+  color: #ffd700;
+}
+
+.effectiveCell {
+  color: #ffd700;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(0,0,0,0.1);
 }

@@ -19,10 +19,10 @@
 }
 
 .tab {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
   background: transparent;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
@@ -138,8 +138,8 @@
 
 .table th {
   background: var(--th-bg);
-  padding: 10px 12px;
-  font-size: 15px;
+  padding: 7px 8px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
   text-align: center;
@@ -147,8 +147,8 @@
   white-space: nowrap;
 }
 
-.thRank { width: 48px; }
+.thRank { width: 40px; }
 .thName { text-align: center; }
-.thScore { width: 75px; }
-.thCount { width: 48px; }
+.thScore { width: 60px; }
+.thCount { width: 40px; }
 

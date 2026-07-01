@@ -38,10 +38,28 @@ function PersonPipes({ member, teamName }: { member: Member; teamName: string })
   const pipe3Cls = `progress_zTSqP${topUnlocked ? '' : ' progressLocked_GRAY'}`;
   const tip2 = advUnlocked
     ? `${member.advancedTotal} / ${maxAdvanced}`
-    : `${member.advancedTotal} / ${maxAdvanced}（未达基础门槛 ${80}，进阶分无效）`;
+    : `${member.advancedTotal} / ${maxAdvanced}（未达基础门槛 80，进阶分无效）`;
   const tip3 = topUnlocked
     ? `${member.topTotal} / ${maxTop}`
-    : `${member.topTotal} / ${maxTop}（未达进阶门槛 ${40}，登顶分无效）`;
+    : `${member.topTotal} / ${maxTop}（未达进阶门槛 40，登顶分无效）`;
+
+  // 球指示「当前进度边界」：放在最高的有效段尾部
+  type BallLevel = 'top' | 'advanced' | 'basic' | null;
+  const ballLevel: BallLevel =
+    topUnlocked && member.topTotal > 0 ? 'top' :
+    advUnlocked && member.advancedTotal > 0 ? 'advanced' :
+    member.basicTotal > 0 ? 'basic' : null;
+  const ballPct =
+    ballLevel === 'top' ? pct3 :
+    ballLevel === 'advanced' ? pct2 :
+    ballLevel === 'basic' ? pct1 : 0;
+  const ballCls = ballPct >= 100 ? 'circleFull_Kp4vJ' : 'circle_FXZIg';
+
+  // 根据球的位置选择对应的颜色滤镜类
+  const circleColorCls =
+    ballLevel === 'top' ? 'circle-red' :
+    ballLevel === 'advanced' ? 'circle-yellow' :
+    'circle-blue';
 
   return (
     <div className="pipes_IXOBJ">
@@ -54,12 +72,18 @@ function PersonPipes({ member, teamName }: { member: Member; teamName: string })
       <div className="pipe_DLbm3">
         <span className="name_ETm8P">{member.name} - {teamName}</span>
         <img src={PROGRESS_BLUE} className="progress_zTSqP" title={`${member.basicTotal} / ${maxBasic}`} alt="progress" style={{ width: `${pct1}%` }} />
+        {ballLevel === 'basic' && (
+          <img src={PROGRESS_CIRCLE} className={`${ballCls} ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
+        )}
       </div>
 
       <div className={Node1} />
 
       <div className="pipe_DLbm3">
         <img src={PROGRESS_YELLOW} className={pipe2Cls} title={tip2} alt="progress" style={{ width: `${pct2}%` }} />
+        {ballLevel === 'advanced' && (
+          <img src={PROGRESS_CIRCLE} className={`${ballCls} ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
+        )}
         <div className="badges2_bcVll" />
       </div>
 
@@ -67,14 +91,8 @@ function PersonPipes({ member, teamName }: { member: Member; teamName: string })
 
       <div className="pipe_DLbm3">
         <img src={PROGRESS_RED} className={pipe3Cls} title={tip3} alt="progress" style={{ width: `${pct3}%` }} />
-        {/* 圆球只在「有效」(已解锁) 且有分数时显示，标记有效分数的终点 */}
-        {topUnlocked && pct3 > 0 && (
-          <img
-            src={PROGRESS_CIRCLE}
-            className={pct3 >= 100 ? 'circleFull_Kp4vJ' : 'circle_FXZIg'}
-            alt="node"
-            style={{ left: `${pct3}%` }}
-          />
+        {ballLevel === 'top' && (
+          <img src={PROGRESS_CIRCLE} className={`${ballCls} ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
         )}
         <div className="badges2_bcVll" />
       </div>

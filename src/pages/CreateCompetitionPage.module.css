@@ -1,6 +1,7 @@
 .page {
-  min-height: 100vh;
+  min-height: 100%;
   background: var(--bg-primary);
+  overflow-y: visible;
 }
 
 .container {
@@ -238,6 +239,64 @@
   font-family: inherit;
 }
 .addTeamBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.required {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--danger);
+  margin-left: 6px;
+}
+
+.jsonTextarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: 'Consolas', 'Source Code Pro', 'Courier New', monospace;
+  line-height: 1.6;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+  tab-size: 2;
+}
+
+.jsonTextarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.jsonTextarea::placeholder { color: var(--text-muted); }
+
+.cookieTextarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: 'Consolas', 'Source Code Pro', 'Courier New', monospace;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+
+.cookieTextarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.cookieTextarea::placeholder { color: var(--text-muted); }
+
+.jsonHint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
 
 .submitRow {
   display: flex;

@@ -8,6 +8,7 @@ export interface CompetitionSummary {
   start_time: string | null;
   duration_minutes: number | null;
   access_cookie: string | null;
+  pta_contest_id: string | null;
   team_count: number;
   member_count: number;
 }
@@ -20,6 +21,7 @@ export interface CompetitionDetail {
   start_time: string | null;
   duration_minutes: number | null;
   access_cookie: string | null;
+  pta_contest_id: string | null;
   teams: TeamData[];
 }
 
@@ -59,6 +61,7 @@ export async function createCompetition(data: {
   start_time?: string;
   duration_minutes?: number;
   access_cookie?: string;
+  pta_contest_id?: string;
 }): Promise<{ id: number }> {
   const res = await fetch(`${BASE}/competitions`, {
     method: 'POST',

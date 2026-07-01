@@ -33,6 +33,23 @@ function TeamPipes({ team }: { team: Team }) {
     ? `${team.topTotal} / ${maxTop}`
     : `${team.topTotal} / ${maxTop}（未达进阶门槛 400，登顶分无效）`;
 
+  // 球指示「当前进度边界」：放在最高有效段尾部
+  type BallLevel = 'top' | 'advanced' | 'basic' | null;
+  const ballLevel: BallLevel =
+    team.topUnlocked && team.topTotal > 0 ? 'top' :
+    team.advancedUnlocked && team.advancedTotal > 0 ? 'advanced' :
+    team.basicTotal > 0 ? 'basic' : null;
+  const ballPct =
+    ballLevel === 'top' ? pct3 :
+    ballLevel === 'advanced' ? pct2 :
+    ballLevel === 'basic' ? pct1 : 0;
+
+  // 根据球的位置选择对应的颜色滤镜类
+  const circleColorCls =
+    ballLevel === 'top' ? 'circle-red' :
+    ballLevel === 'advanced' ? 'circle-yellow' :
+    'circle-blue';
+
   return (
     <div className="pipes_JC6Fa">
       <div className="head_FBonr">
@@ -44,6 +61,9 @@ function TeamPipes({ team }: { team: Team }) {
       <div className="pipe_QQ5UZ">
         <span className="name_UpmfW">{team.name}</span>
         <img src={PROGRESS_BLUE} className="progress_JU3mj" title={`${team.basicTotal} / ${maxBasic}`} alt="progress" style={{ width: `${pct1}%` }} />
+        {ballLevel === 'basic' && (
+          <img src={PROGRESS_CIRCLE} className={`circle_dkyqW ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
+        )}
         <div className="badges_S9eE3" />
       </div>
 
@@ -51,6 +71,9 @@ function TeamPipes({ team }: { team: Team }) {
 
       <div className="pipe_QQ5UZ">
         <img src={PROGRESS_YELLOW} className={pipe2Cls} title={tip2} alt="progress" style={{ width: `${pct2}%` }} />
+        {ballLevel === 'advanced' && (
+          <img src={PROGRESS_CIRCLE} className={`circle_dkyqW ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
+        )}
         <div className="badges2_uxJ8K" />
       </div>
 
@@ -58,14 +81,8 @@ function TeamPipes({ team }: { team: Team }) {
 
       <div className="pipe_QQ5UZ">
         <img src={PROGRESS_RED} className={pipe3Cls} title={tip3} alt="progress" style={{ width: `${pct3}%` }} />
-        {/* 圆球只在「有效」(已解锁) 且有分数时显示，标记有效分数的终点 */}
-        {team.topUnlocked && pct3 > 0 && (
-          <img
-            src={PROGRESS_CIRCLE}
-            className="circle_dkyqW"
-            alt="node"
-            style={{ left: `${pct3}%` }}
-          />
+        {ballLevel === 'top' && (
+          <img src={PROGRESS_CIRCLE} className={`circle_dkyqW ${circleColorCls}`} alt="node" style={{ left: `${ballPct}%` }} />
         )}
         <div className="badges2_uxJ8K" />
       </div>

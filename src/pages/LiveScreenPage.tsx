@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { ScoreProvider, useScore } from '../context/ScoreContext';
-import { startMockWebSocket, stopMockWebSocket } from '../services/mockWebSocket';
 import { getCompetition, type CompetitionDetail } from '../services/api';
 import {
   BASIC_SCORES, ADVANCED_SCORES, TOP_SCORES,
@@ -79,35 +78,47 @@ function convertDetail(detail: CompetitionDetail): Team[] {
   });
 }
 
-function WebSocketStarter() {
-  const { state, dispatch } = useScore();
-  const stateRef = useRef(state);
-  stateRef.current = state;
-  const started = useRef(false);
+const POLL_INTERVAL_MS = 60_000; // 60 秒轮询一次
+
+/**
+ * 定时轮询组件：每 60 秒从后端拉取最新分数，全量替换状态
+ */
+function PollingUpdater({ competitionId }: { competitionId: number }) {
+  const { dispatch } = useScore();
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
+    const poll = async () => {
+      try {
+        const detail = await getCompetition(competitionId);
+        const teams = convertDetail(detail);
+        dispatch({ type: 'BATCH_REPLACE', teams });
+      } catch (err) {
+        console.error('轮询获取数据失败:', err);
+      }
+    };
 
-    const timer = setTimeout(() => {
-      startMockWebSocket(dispatch, () =>
-        stateRef.current.teams.flatMap(t => t.members.map(m => ({ memberId: m.id, teamId: t.id })))
-      );
-    }, 2000);
+    // 立即执行一次
+    poll();
+
+    // 定时轮询
+    timerRef.current = setInterval(poll, POLL_INTERVAL_MS);
 
     return () => {
-      clearTimeout(timer);
-      stopMockWebSocket();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [competitionId, dispatch]);
 
   return null;
 }
 
-function LiveScreenContent({ compName }: { compName: string }) {
+function LiveScreenContent({ compName, compId }: { compName: string; compId: number }) {
   return (
     <div className={styles.app}>
-      <WebSocketStarter />
+      <PollingUpdater competitionId={compId} />
       <Header title={compName} />
       <div className={styles.main}>
         <CenterPanel />
@@ -194,7 +205,7 @@ export function LiveScreenPage() {
 
   return (
     <ScoreProvider initialTeams={teams}>
-      <LiveScreenContent compName={compName} />
+      <LiveScreenContent compName={compName} compId={parseInt(id!)} />
     </ScoreProvider>
   );
 }

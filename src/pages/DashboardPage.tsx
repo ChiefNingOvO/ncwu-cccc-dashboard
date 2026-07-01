@@ -77,7 +77,11 @@ export function DashboardPage() {
         ) : (
           <div className={styles.grid}>
             {competitions.map(comp => (
-              <div key={comp.id} className={styles.card}>
+              <div
+                key={comp.id}
+                className={styles.card}
+                onClick={() => navigate(`/live/${comp.id}/official`)}
+              >
                 <div className={styles.cardTop}>
                   <span className={`${styles.badge} ${statusClasses[comp.status]}`}>
                     {statusLabels[comp.status]}
@@ -93,6 +97,11 @@ export function DashboardPage() {
                   </div>
                 )}
                 <h3 className={styles.cardName}>{comp.name}</h3>
+                {comp.pta_contest_id && (
+                  <div className={styles.ptaId}>
+                    📋 PTA 比赛 ID：{comp.pta_contest_id}
+                  </div>
+                )}
                 <div className={styles.stats}>
                   <div className={styles.stat}>
                     <span className={styles.statValue}>{comp.team_count}</span>
@@ -103,18 +112,12 @@ export function DashboardPage() {
                     <span className={styles.statLabel}>选手</span>
                   </div>
                 </div>
-                <div className={styles.actions}>
+                <div className={styles.actions} onClick={e => e.stopPropagation()}>
                   <button
                     className={styles.officialBtn}
                     onClick={() => navigate(`/live/${comp.id}/official`)}
                   >
-                    🏆 官方版榜单
-                  </button>
-                  <button
-                    className={styles.simpleBtn}
-                    onClick={() => navigate(`/live/${comp.id}`)}
-                  >
-                    📊 简约版榜单
+                    🏆 查看榜单
                   </button>
                   {comp.status === 'active' && (
                     <button

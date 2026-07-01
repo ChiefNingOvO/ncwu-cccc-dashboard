@@ -581,6 +581,12 @@ img { vertical-align: unset; }
 .rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .red_FMh64 { color: #f04f4f; }
 .rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .pipe_DLbm3 .grey_gIZ_V { color: #c5c5c5; }
 
+/* 圆球颜色滤镜 (基础蓝、进阶黄、登顶红) */
+/* 原始圆是红色，通过 hue-rotate 来变成蓝色和黄色 */
+.circle-blue { filter: hue-rotate(-135deg) saturate(1.3); }
+.circle-yellow { filter: hue-rotate(-45deg) saturate(1.3); }
+.circle-red { filter: hue-rotate(0deg); }
+
 /* 节点 */
 .rankStudentPage_YXwTc .studentList_JpA1T .studentListItem_LWYA2 .pipes_IXOBJ .node_JIp6m {
   position: relative; z-index: 2;

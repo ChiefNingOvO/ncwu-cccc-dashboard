@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { ScoreProvider, useScore } from '../context/ScoreContext';
-import { startMockWebSocket, stopMockWebSocket } from '../services/mockWebSocket';
 import { getCompetition, type CompetitionDetail } from '../services/api';
 import {
   BASIC_SCORES, ADVANCED_SCORES, TOP_SCORES,
@@ -10,6 +9,7 @@ import {
   type Team, type Member, type QuestionScore,
 } from '../types';
 import { GPLTCenterPanel } from '../components/GPLTCenterPanel';
+import { Header } from '../components/Header';
 import { CountdownPage } from './CountdownPage';
 import '../styles/official.css';
 import styles from './OfficialLiveScreenPage.module.css';
@@ -63,27 +63,40 @@ function convertDetail(detail: CompetitionDetail): Team[] {
   });
 }
 
-/* ---- WebSocket 启动器 ---- */
-function WebSocketStarter() {
-  const { state, dispatch } = useScore();
-  const stateRef = useRef(state);
-  stateRef.current = state;
-  const started = useRef(false);
+const POLL_INTERVAL_MS = 60_000; // 60 秒轮询一次
+
+/* ---- 定时轮询组件 ---- */
+function PollingUpdater({ competitionId }: { competitionId: number }) {
+  const { dispatch } = useScore();
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
-    const timer = setTimeout(() => {
-      startMockWebSocket(dispatch, () =>
-        stateRef.current.teams.flatMap(t => t.members.map(m => ({ memberId: m.id, teamId: t.id })))
-      );
-    }, 2000);
-    return () => { clearTimeout(timer); stopMockWebSocket(); };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const poll = async () => {
+      try {
+        const detail = await getCompetition(competitionId);
+        const teams = convertDetail(detail);
+        dispatch({ type: 'BATCH_REPLACE', teams });
+      } catch (err) {
+        console.error('轮询获取数据失败:', err);
+      }
+    };
+
+    poll();
+    timerRef.current = setInterval(poll, POLL_INTERVAL_MS);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [competitionId, dispatch]);
+
   return null;
 }
 
 /* ---- 官方版大屏内容 ---- */
-function OfficialLiveContent({ compName: _compName, compId: _compId }: { compName: string; compId: string }) {
+function OfficialLiveContent({ compName, compId }: { compName: string; compId: number }) {
 
   // 官方版页面需要自然滚动，覆盖全局 overflow:hidden
   useEffect(() => {
@@ -99,9 +112,11 @@ function OfficialLiveContent({ compName: _compName, compId: _compId }: { compNam
       body.style.overflow = '';
     };
   }, []);
+
   return (
     <div className={styles.page}>
-      <WebSocketStarter />
+      <Header title={compName} showBack={true} />
+      <PollingUpdater competitionId={compId} />
       <GPLTCenterPanel />
     </div>
   );
@@ -163,7 +178,7 @@ export function OfficialLiveScreenPage() {
   }
   return (
     <ScoreProvider initialTeams={teams}>
-      <OfficialLiveContent compName={compName} compId={id!} />
+      <OfficialLiveContent compName={compName} compId={parseInt(id!)} />
     </ScoreProvider>
   );
 }

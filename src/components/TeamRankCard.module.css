@@ -26,10 +26,10 @@
   100% { background: var(--row-even); }
 }
 
-.rank { text-align: center; padding: 8px 10px; }
+.rank { text-align: center; padding: 7px 8px; }
 
 .rankNum {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -38,9 +38,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px; height: 26px;
+  width: 22px; height: 22px;
   border-radius: 50%;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
   color: #fff;
 }
@@ -50,8 +50,8 @@
 .medal3 { background: #c08a50; }
 
 .name {
-  padding: 8px 10px;
-  font-size: 16px;
+  padding: 7px 8px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
   text-align: center;
@@ -62,8 +62,8 @@
 
 .score {
   text-align: center;
-  padding: 8px 10px;
-  font-size: 16px;
+  padding: 7px 8px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
@@ -73,8 +73,8 @@
 
 .total {
   text-align: center;
-  padding: 8px 10px;
-  font-size: 18px;
+  padding: 7px 8px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
@@ -82,7 +82,7 @@
 
 .count {
   text-align: center;
-  padding: 8px 10px;
-  font-size: 15px;
+  padding: 7px 8px;
+  font-size: 13px;
   color: var(--text-secondary);
 }

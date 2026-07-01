@@ -27,3 +27,6 @@ dist-ssr
 .claude/
 ai-assets/
 *.ai-model
+
+# Local runtime data
+data/*.db

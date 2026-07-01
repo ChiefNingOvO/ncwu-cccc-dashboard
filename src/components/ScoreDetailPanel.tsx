@@ -26,69 +26,73 @@ export function ScoreDetailPanel() {
 
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.panel}>
-        <div className={styles.header}>
-          <span className={styles.title}>
-            📋 {member.name}
-            <span className={styles.teamName}>（{team.name}）</span>
-          </span>
-          <button className={styles.closeBtn} onClick={handleClose}>✕</button>
+      <div className={styles.container}>
+        <div className={styles.titleArea}>
+          <span className={styles.memberName}>{member.name} - {team.name}</span>
+          <button className={styles.closeBtn} onClick={handleClose}>×</button>
         </div>
-
-        <div className={styles.content}>
-          <LevelSection title="基础级" scores={member.basicScores} maxScores={BASIC_SCORES} color="#1a73e8" />
-          <LevelSection title="进阶级" scores={member.advancedScores} maxScores={ADVANCED_SCORES} color="#e8710a" />
-          <LevelSection title="登顶级" scores={member.topScores} maxScores={TOP_SCORES} color="#e6a817" />
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th colSpan={8} className={styles.levelHeader}>基础级</th>
+                <th colSpan={4} className={styles.levelHeader}>进阶级</th>
+                <th colSpan={3} className={styles.levelHeader}>登顶级</th>
+                <th rowSpan={2} className={styles.totalHeader}>总分</th>
+                <th rowSpan={2} className={styles.effectiveHeader}>个人<br/>有效分</th>
+              </tr>
+              <tr className={styles.qHeaderRow}>
+                {BASIC_SCORES.map((_, i) => (
+                  <th key={`b-${i}`} className={styles.qHeader} data-stage="basic">1-{i + 1}</th>
+                ))}
+                {ADVANCED_SCORES.map((_, i) => (
+                  <th key={`a-${i}`} className={styles.qHeader} data-stage="advanced">2-{i + 1}</th>
+                ))}
+                {TOP_SCORES.map((_, i) => (
+                  <th key={`t-${i}`} className={styles.qHeader} data-stage="top">3-{i + 1}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {member.basicScores.map((q, i) => (
+                  <td
+                    key={`b-${i}`}
+                    className={styles.qCell}
+                    data-stage="basic"
+                    data-pass={q.score > 0}
+                  >
+                    {q.score}
+                  </td>
+                ))}
+                {member.advancedScores.map((q, i) => (
+                  <td
+                    key={`a-${i}`}
+                    className={styles.qCell}
+                    data-stage="advanced"
+                    data-pass={q.score > 0}
+                    data-locked={!member.advancedUnlocked}
+                  >
+                    {q.score}
+                  </td>
+                ))}
+                {member.topScores.map((q, i) => (
+                  <td
+                    key={`t-${i}`}
+                    className={styles.qCell}
+                    data-stage="top"
+                    data-pass={q.score > 0}
+                    data-locked={!member.topUnlocked}
+                  >
+                    {q.score}
+                  </td>
+                ))}
+                <td className={styles.totalCell}>{member.basicTotal + member.advancedTotal + member.topTotal}</td>
+                <td className={styles.effectiveCell}>{member.totalScore}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div className={styles.summary}>
-          <span>基础 {member.basicTotal}</span>
-          <span>进阶 {member.advancedTotal}</span>
-          <span>登顶 {member.topTotal}</span>
-          <span className={styles.total}>总分 {member.totalScore}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LevelSection({
-  title, scores, maxScores, color,
-}: {
-  title: string;
-  scores: { questionIndex: number; score: number; maxScore: number }[];
-  maxScores: number[];
-  color: string;
-}) {
-  const total = scores.reduce((s, q) => s + q.score, 0);
-  const maxTotal = maxScores.reduce((a, b) => a + b, 0);
-
-  return (
-    <div className={styles.section}>
-      <div className={styles.sectionHeader}>
-        <span className={styles.sectionTitle} style={{ color }}>{title}</span>
-        <span className={styles.sectionTotal}>{total}/{maxTotal}</span>
-      </div>
-      <div className={styles.questions}>
-        {scores.map((q, i) => (
-          <div
-            key={i}
-            className={`${styles.question} ${q.score > 0 ? styles.passed : styles.failed}`}
-            title={`第${i + 1}题: ${q.score}/${q.maxScore}`}
-          >
-            <span className={styles.qNum}>T{i + 1}</span>
-            <span className={styles.qScore}>{q.score}/{q.maxScore}</span>
-            <div className={styles.qBar}>
-              <div
-                className={styles.qBarFill}
-                style={{
-                  width: `${(q.score / q.maxScore) * 100}%`,
-                  background: q.score > 0 ? color : '#eee',
-                }}
-              />
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

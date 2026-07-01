@@ -142,8 +142,12 @@ function scoreReducer(state: ScoreState, action: ScoreAction): ScoreState {
       };
     }
 
-    default:
-      return state;
+    case 'BATCH_REPLACE':
+      return {
+        ...state,
+        teams: sortTeams(action.teams.map(team => recalcTeam(team))),
+        lastUpdatedTime: Date.now(),
+      };
   }
 }
 

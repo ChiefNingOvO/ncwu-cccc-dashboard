@@ -1,5 +1,6 @@
 import { Router, type Request, type Response } from 'express';
-import { getDb } from '../db';
+import { getDb, saveDb } from '../db';
+import { syncOnce, startPtaSync, stopPtaSync, getPtaSyncStatus } from '../ptaSync';
 
 const router = Router();
 
@@ -43,20 +44,22 @@ router.get('/', async (_req: Request, res: Response) => {
     start_time: v[4],
     duration_minutes: v[5],
     access_cookie: v[6],
-    team_count: v[7],
-    member_count: v[8],
+    pta_contest_id: v[7],
+    team_count: v[8],
+    member_count: v[9],
   }));
   res.json(rows);
 });
 
 // POST /api/competitions — 创建比赛
 router.post('/', async (req: Request, res: Response) => {
-  const { name, teams: teamData, start_time, duration_minutes, access_cookie } = req.body as {
+  const { name, teams: teamData, start_time, duration_minutes, access_cookie, pta_contest_id } = req.body as {
     name: string;
     teams: { name: string; members: string[] }[];
     start_time?: string;
     duration_minutes?: number;
     access_cookie?: string;
+    pta_contest_id?: string;
   };
 
   if (!name || !teamData || teamData.length === 0) {
@@ -69,8 +72,9 @@ router.post('/', async (req: Request, res: Response) => {
   const startTime = start_time || now.toISOString().slice(0, 19).replace('T', ' ');
   const duration = duration_minutes || 180;
   const cookie = access_cookie || '';
+  const ptaId = pta_contest_id || '';
   const status = start_time && new Date(start_time) > now ? 'upcoming' : 'active';
-  db.run(`INSERT INTO competitions (name, status, created_at, start_time, duration_minutes, access_cookie) VALUES (${esc(name)}, ${esc(status)}, datetime('now', 'localtime'), ${esc(startTime)}, ${duration}, ${esc(cookie)})`);
+  db.run(`INSERT INTO competitions (name, status, created_at, start_time, duration_minutes, access_cookie, pta_contest_id) VALUES (${esc(name)}, ${esc(status)}, datetime('now', 'localtime'), ${esc(startTime)}, ${duration}, ${esc(cookie)}, ${esc(ptaId)})`);
   const compResult = db.exec('SELECT last_insert_rowid()');
   const compId = Number(compResult[0].values[0][0]);
 
@@ -82,6 +86,13 @@ router.post('/', async (req: Request, res: Response) => {
     for (const memberName of team.members) {
       db.run(`INSERT INTO members (team_id, name) VALUES (${teamId}, ${esc(memberName)})`);
     }
+  }
+
+  saveDb();
+
+  // 如果配置了 PTA，立即启动定时同步
+  if (cookie && ptaId) {
+    startPtaSync(compId, 60);
   }
 
   res.status(201).json({ id: compId, name, status: 'active' });
@@ -142,6 +153,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     start_time: comp[4],
     duration_minutes: comp[5],
     access_cookie: comp[6],
+    pta_contest_id: comp[7],
     teams,
   });
 });
@@ -158,6 +170,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
   const db = await getDb();
   db.run(`UPDATE competitions SET status = ${esc(status)} WHERE id = ${compId}`);
+  saveDb();
   res.json({ id: compId, status });
 });
 
@@ -165,8 +178,27 @@ router.put('/:id', async (req: Request, res: Response) => {
 router.delete('/:id', async (req: Request, res: Response) => {
   const db = await getDb();
   const compId = parseInt(req.params.id);
+  stopPtaSync(compId); // 停止同步
   db.run(`DELETE FROM competitions WHERE id = ${compId}`);
+  saveDb();
   res.json({ success: true });
+});
+
+// POST /api/competitions/:id/sync-now — 手动触发一次同步
+router.post('/:id/sync-now', async (req: Request, res: Response) => {
+  const compId = parseInt(req.params.id);
+  try {
+    const count = await syncOnce(compId);
+    res.json({ success: true, updatedMembers: count });
+  } catch (err) {
+    res.status(500).json({ error: '同步失败' });
+  }
+});
+
+// GET /api/competitions/:id/sync-status — 查看同步状态
+router.get('/:id/sync-status', async (req: Request, res: Response) => {
+  const compId = parseInt(req.params.id);
+  res.json({ competitionId: compId, ...getPtaSyncStatus(compId) });
 });
 
 // GET /api/competitions/:id/scores — 获取所有分数
@@ -214,7 +246,91 @@ router.post('/:id/scores', async (req: Request, res: Response) => {
     );
   }
 
+  saveDb();
   res.json({ success: true, count: updates.length });
+});
+
+// POST /api/competitions/:id/import-scores — 从 PTA 导入分数（按姓名匹配队员）
+// 接收格式: [{ name: "张三", score: { "l1-1": 5, "l1-2": 100, ... } }, ...]
+router.post('/:id/import-scores', async (req: Request, res: Response) => {
+  const db = await getDb();
+  const compId = parseInt(req.params.id);
+  const players: Array<{ name: string; score: Record<string, number> }> = req.body;
+
+  if (!Array.isArray(players) || players.length === 0) {
+    res.status(400).json({ error: '数据格式错误，需要 [{name, score}]' });
+    return;
+  }
+
+  // 题目映射: l1-1~8 → basic(0-7), l1-9~12 → advanced(0-3), l1-13~15 → top(0-2)
+  function parseQuestionKey(key: string): { level: string; questionIndex: number } | null {
+    const match = key.match(/^l1-(\d+)$/);
+    if (!match) return null;
+    const idx = parseInt(match[1]) - 1; // 0-based
+    if (idx < 8) return { level: 'basic', questionIndex: idx };
+    if (idx < 12) return { level: 'advanced', questionIndex: idx - 8 };
+    if (idx < 15) return { level: 'top', questionIndex: idx - 12 };
+    return null; // 超过 15 题忽略
+  }
+
+  // 获取该比赛的所有队员 (name → id 映射)
+  const memberRows = db.exec(`
+    SELECT m.id, m.name FROM members m
+    JOIN teams t ON t.id = m.team_id
+    WHERE t.competition_id = ${compId}
+  `);
+
+  const nameToId = new Map<string, number>();
+  if (memberRows.length > 0) {
+    for (const row of memberRows[0].values) {
+      nameToId.set(row[1] as string, row[0] as number);
+    }
+  }
+
+  let matchedCount = 0;
+  let unmatchedPlayers: string[] = [];
+
+  for (const player of players) {
+    // 先精确匹配，再尝试模糊匹配（PTA 名包含于 DB 名，如 "王云飞" 匹配 "202217902 王云飞"）
+    let memberId = nameToId.get(player.name);
+    if (!memberId) {
+      for (const [dbName, dbId] of nameToId) {
+        if (dbName.includes(player.name) || player.name.includes(dbName)) {
+          memberId = dbId;
+          break;
+        }
+      }
+    }
+    if (!memberId) {
+      unmatchedPlayers.push(player.name);
+      continue;
+    }
+    matchedCount++;
+
+    for (const [key, score] of Object.entries(player.score)) {
+      const mapped = parseQuestionKey(key);
+      if (!mapped) continue; // 忽略不认识的题目
+      // 分数取整
+      const intScore = Math.round(Number(score)) || 0;
+      db.run(
+        `INSERT OR REPLACE INTO scores (member_id, level, question_index, score, updated_at)
+         VALUES (${memberId}, ${esc(mapped.level)}, ${mapped.questionIndex}, ${intScore}, datetime('now', 'localtime'))`
+      );
+    }
+  }
+
+  saveDb();
+
+  if (unmatchedPlayers.length > 0) {
+    console.log(`⚠️ 导入完成: 匹配 ${matchedCount} 人, 未匹配 ${unmatchedPlayers.length} 人 (${unmatchedPlayers.slice(0, 5).join(', ')}${unmatchedPlayers.length > 5 ? '...' : ''})`);
+  }
+
+  res.json({
+    success: true,
+    matchedCount,
+    unmatchedCount: unmatchedPlayers.length,
+    unmatchedPlayers: unmatchedPlayers.length > 0 ? unmatchedPlayers : undefined,
+  });
 });
 
 export default router;

@@ -65,4 +65,5 @@ export type ScoreAction =
   | { type: 'SELECT_TEAM'; teamId: string }
   | { type: 'SELECT_MEMBER'; memberId: string }
   | { type: 'UPDATE_SCORE'; memberId: string; level: ScoreLevel; questionIndex: number; score: number }
-  | { type: 'BATCH_UPDATE'; updates: Array<{ memberId: string; level: ScoreLevel; questionIndex: number; score: number }> };
+  | { type: 'BATCH_UPDATE'; updates: Array<{ memberId: string; level: ScoreLevel; questionIndex: number; score: number }> }
+  | { type: 'BATCH_REPLACE'; teams: Team[] };
