@@ -1,7 +1,14 @@
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getDb, saveDb } from './db';
 
 // ===== 同步逻辑 =====
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DEFAULT_PTA_SYNC_SCRIPT = path.join(__dirname, 'scripts', 'pta_sync.py');
+const PYTHON_BIN = process.env.PYTHON_BIN || 'python';
 
 function esc(v: string | number): string {
   if (typeof v === 'number') return String(v);
@@ -54,13 +61,10 @@ export async function syncOnce(competitionId: number): Promise<number> {
  * 调用 Python 脚本拉取 PTA 数据，解析 stdout JSON 直接写入 DB
  */
 async function callPythonScript(competitionId: number, ptaContestId: string, cookie: string, db: any): Promise<number> {
-  const scriptPath = 'D:\\1.py';
-
-  // 不再传 --api-base，Python 脚本直接输出 JSON 到 stdout
-  const cmd = `python "${scriptPath}" --pta-contest-id "${ptaContestId}"`;
+  const scriptPath = process.env.PTA_SYNC_SCRIPT_PATH || DEFAULT_PTA_SYNC_SCRIPT;
 
   console.log(`🐍 调用 Python 脚本同步比赛 ${competitionId}...`);
-  const output = execSync(cmd, {
+  const output = execFileSync(PYTHON_BIN, [scriptPath, '--pta-contest-id', ptaContestId], {
     timeout: 180000,
     encoding: 'utf-8',
     env: { ...process.env, PTA_COOKIE: cookie },

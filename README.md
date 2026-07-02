@@ -52,6 +52,12 @@
 npm install
 ```
 
+如果需要使用 PTA 成绩同步功能，还需要安装 Python 依赖：
+
+```bash
+pip install -r server/scripts/requirements.txt
+```
+
 ### 2. 启动后端服务
 
 打开一个终端运行：
@@ -105,6 +111,8 @@ npx tsc --noEmit     # 仅运行 TypeScript 类型检查
 - API 前缀：`/api`
 
 前端请求 `/api/competitions` 等接口时，会通过 Vite 代理转发到后端。若只启动前端而没有启动后端，比赛列表、创建比赛和实时大屏数据加载会失败。
+
+PTA 成绩同步脚本位于 `server/scripts/pta_sync.py`。后端会通过比赛配置中的 Access Cookie 和 PTA 比赛 ID 调用该脚本拉取成绩；如需使用自定义脚本路径，可以设置环境变量 `PTA_SYNC_SCRIPT_PATH`。
 
 ## 赛制规则
 
